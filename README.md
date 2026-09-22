@@ -16,7 +16,7 @@ npm run build
 npm run preview
 ```
 
-The production output is generated in `dist/`.
+The production output is generate in `dist/`.
 
 ## Deploy to GitHub Pages
 
