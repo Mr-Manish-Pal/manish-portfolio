@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Manish Pal — Embedded Systems &amp; Electronics Engineering</title>
+  <desc id="description">Portfolio covering embedded systems, firmware, electronics, Linux, and edge AI.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#120A0D"/>
+      <stop offset=".55" stop-color="#0B0709"/>
+      <stop offset="1" stop-color="#1A0E13"/>
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop stop-color="#9F1239" stop-opacity=".34"/>
+      <stop offset="1" stop-color="#9F1239" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
+      <path d="M42 0H0V42" fill="none" stroke="#E11D48" stroke-opacity=".11"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#background)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <ellipse cx="923" cy="315" rx="360" ry="315" fill="url(#glow)"/>
+  <rect x="72" y="75" width="64" height="64" fill="#1A0E13" stroke="#BE123C"/>
+  <text x="104" y="119" fill="#F5E9EC" font-family="Georgia,serif" font-size="35" font-weight="700" text-anchor="middle">MP</text>
+  <text x="164" y="116" fill="#C9B5BB" font-family="Arial,sans-serif" font-size="17" letter-spacing="4">MANISH PAL  /  ECE</text>
+  <text x="72" y="300" fill="#F5E9EC" font-family="Georgia,serif" font-size="83" font-weight="600">Manish <tspan fill="#FB7185">Pal.</tspan></text>
+  <text x="78" y="361" fill="#C9B5BB" font-family="Arial,sans-serif" font-size="23">Embedded systems · Firmware · Electronics · Edge AI</text>
+  <path d="M78 416h362" stroke="#BE123C" stroke-width="2"/>
+  <text x="78" y="462" fill="#B09BA1" font-family="Arial,sans-serif" font-size="18">B.Tech Electronics &amp; Communication Engineering student</text>
+  <text x="78" y="511" fill="#8A7479" font-family="Arial,sans-serif" font-size="15" letter-spacing="2">MEERUT, INDIA</text>
+  <g transform="translate(835 156)" fill="none" stroke="#FB7185" stroke-opacity=".62">
+    <circle cx="150" cy="150" r="143"/>
+    <circle cx="150" cy="150" r="115" stroke-dasharray="4 9"/>
+    <circle cx="150" cy="150" r="73" stroke="#E11D48"/>
+    <path d="M150 7v56m0 174v56M7 150h56m174 0h56M49 49l40 40m122 122 40 40m0-202-40 40M89 211l-40 40"/>
+    <circle cx="150" cy="7" r="4" fill="#FB7185"/>
+    <circle cx="293" cy="150" r="4" fill="#FB7185"/>
+  </g>
+  <circle cx="985" cy="306" r="57" fill="#1A0E13" stroke="#FB7185" stroke-opacity=".75"/>
+  <text x="985" y="325" fill="#F5E9EC" font-family="Georgia,serif" font-size="49" text-anchor="middle">MP</text>
+  <rect x="72" y="570" width="1056" height="1" fill="#E11D48" fill-opacity=".3"/>
+  <text x="72" y="601" fill="#B09BA1" font-family="monospace" font-size="12" letter-spacing="2">HARDWARE  /  FIRMWARE  /  LINUX  /  EDGE AI</text>
+</svg>

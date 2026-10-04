@@ -1,52 +1,468 @@
-import { useEffect, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowUpRight, Asterisk, BookOpen, Box, ChevronRight, CircuitBoard, Cpu, GitBranch as Github, Menu, Microscope, MonitorCog, MoveUpRight, Ruler, Search, Send, ShieldCheck, Sparkles, Terminal, X } from 'lucide-react'
-import { navItems, projects, researchTopics, skillGroups, toolbox, type Project } from './data/content'
+import { useEffect, useState, type CSSProperties, type FormEvent } from 'react'
+import {
+  ArrowDown,
+  ArrowRight,
+  ArrowUpRight,
+  ChevronDown,
+  Cpu,
+  ExternalLink,
+  GitBranch as Github,
+  GraduationCap,
+  Mail,
+  Menu,
+  Radio,
+  X,
+} from 'lucide-react'
+import {
+  certifications,
+  contact,
+  education,
+  experience,
+  navItems,
+  profile,
+  projects,
+  researchTopics,
+  skills,
+  socialLinks,
+  type Project,
+  type ProjectFilter,
+} from './data/content'
 import './App.css'
 
-const iconMap = [Cpu, Ruler, Terminal, Sparkles, MonitorCog, CircuitBoard, Microscope, Github]
+const roles = ['Embedded Systems Engineer', 'Firmware Developer', 'Edge AI Builder']
+const projectFilters: ProjectFilter[] = ['IoT', 'Computer Vision', 'Firmware', 'Linux']
 
-function SectionHeading({ eyebrow, title, text }: { eyebrow: string; title: React.ReactNode; text?: string }) {
-  const [number, label] = eyebrow.split(' / ')
-  return <motion.div className="section-heading" initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .25 }} transition={{ duration: .55 }}><span className="eyebrow"><span className="section-number">{number}</span><span>{label || eyebrow}</span></span><h2>{title}</h2>{text && <p>{text}</p>}</motion.div>
+function SectionHeading({
+  id,
+  index,
+  eyebrow,
+  title,
+  description,
+}: {
+  id: string
+  index: string
+  eyebrow: string
+  title: string
+  description?: string
+}) {
+  return (
+    <div className="section-heading reveal">
+      <p className="eyebrow"><span>{index}</span>{eyebrow}</p>
+      <h2 id={id}>{title}</h2>
+      {description && <p className="section-description">{description}</p>}
+    </div>
+  )
 }
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
-  useEffect(() => { const handleScroll = () => setScrolled(window.scrollY > 30); window.addEventListener('scroll', handleScroll); return () => window.removeEventListener('scroll', handleScroll) }, [])
-  useEffect(() => { document.body.style.overflow = selectedProject || menuOpen ? 'hidden' : ''; return () => { document.body.style.overflow = '' } }, [selectedProject, menuOpen])
-  const closeMenu = () => setMenuOpen(false)
+  const [activeSection, setActiveSection] = useState('home')
+  const [roleIndex, setRoleIndex] = useState(0)
+  const [projectFilter, setProjectFilter] = useState<ProjectFilter | 'All'>('All')
+  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+  const [formMessage, setFormMessage] = useState('')
 
-  return <div className="site-shell">
-    <header className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
-      <a className="wordmark" href="#home" onClick={closeMenu} aria-label="Manish Pal home"><span className="wordmark-mark">MP</span><span>MANISH PAL <small>/ ECE</small></span></a>
-      <button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-label={menuOpen ? 'Close menu' : 'Open menu'} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={20} /> : <Menu size={20} />}</button>
-      <nav className={menuOpen ? 'nav-links is-open' : 'nav-links'} aria-label="Primary navigation">{navItems.map((item, index) => <a key={item} href={`#${item.toLowerCase()}`} onClick={closeMenu}><span>0{index + 1}</span>{item}</a>)}<a className="nav-github" href="https://github.com/Mr-Manish-Pal" target="_blank" rel="noreferrer" aria-label="Open GitHub profile"><Github size={16} /></a></nav>
-    </header>
-    <main>
-      <section className="hero section-pad" id="home"><div className="hero-copy"><motion.div className="status-line" initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: .55 }}><span className="status-dot" /> available for purposeful builds <span className="slash">//</span> meerut, in</motion.div><motion.h1 initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .1, duration: .7 }}>Manish <em>Pal</em></motion.h1><motion.p className="hero-role" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .25 }}>Embedded Systems Engineer <span>|</span> ECE Student</motion.p><motion.p className="hero-intro" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: .35 }}>Building practical embedded systems at the intersection of electronics, firmware, Linux, and edge AI.</motion.p><motion.div className="hero-actions" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .45 }}><a className="button button-primary" href="#projects">View projects <ArrowUpRight size={17} /></a><a className="button button-quiet" href="https://github.com/Mr-Manish-Pal" target="_blank" rel="noreferrer"><Github size={17} /> GitHub</a><a className="resume-link" href="/resume/Manish_Pal_Resume.pdf" download>Download resume <MoveUpRight size={14} /></a></motion.div><div className="hero-tags" aria-label="Technical focus areas">{['ESP32', 'STM32', 'C/C++', 'Python', 'FreeRTOS', 'TinyML', 'Linux', 'PCB design'].map(tag => <span key={tag}>{tag}</span>)}</div></div><HeroDiagram /></section>
-      <div className="ticker" aria-hidden="true"><div><span>HARDWARE</span><i>→</i><span>FIRMWARE</span><i>→</i><span>LINUX</span><i>→</i><span>EDGE AI</span><i>→</i><span>RESEARCH</span><i>→</i><span>HARDWARE</span><i>→</i><span>FIRMWARE</span><i>→</i><span>LINUX</span></div></div>
-      <section className="section-pad about-section" id="about"><SectionHeading eyebrow="01 / context" title="Built close to the metal." text="A developing engineer who likes the moment a schematic becomes a signal, and a signal becomes something useful." /><div className="about-grid"><div className="about-body"><p>I’m a B.Tech Electronics & Communication Engineering student focused on the space where hardware and firmware meet. My work leans practical: wire the system, read the datasheet, measure the signal, then make the next iteration better.</p><p>Alongside embedded systems, I’m exploring Edge AI and TinyML, Linux-based development, and the research questions that shape efficient, secure computing.</p><div className="philosophy"><span>engineering philosophy</span><strong>Build. Debug.<br /><em>Measure. Optimize.</em></strong></div></div><div className="snapshot-grid">{['Embedded systems', 'Hardware debugging', 'Firmware development', 'Edge AI / TinyML', 'Linux development', 'PCB design', 'Research', 'Open source'].map((item, index) => { const Icon = iconMap[index]; return <div className="snapshot-card" key={item}><Icon size={18} /><span>{item}</span><small>0{index + 1}</small></div> })}</div></div></section>
-      <section className="section-pad dark-band" id="skills"><SectionHeading eyebrow="02 / capability map" title="The engineering toolbox." text="A living skill matrix: working knowledge where I build, and clear labels where I’m still learning." /><div className="skill-grid">{skillGroups.map((group, index) => <motion.article className="skill-card" key={group.label} initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .2 }} transition={{ delay: index * .05 }}><div className="skill-card-top"><span>0{index + 1}</span><span className="skill-level">{group.level}</span></div><h3>{group.label}</h3><div className="chip-list">{group.items.map(item => <span key={item}>{item}</span>)}</div></motion.article>)}</div></section>
-      <section className="section-pad projects-section" id="projects"><div className="section-heading heading-row"><div><span className="eyebrow"><Asterisk size={13} /> 03 / selected work</span><h2>Projects with a<br /><em>reason to exist.</em></h2></div><p>Hardware-led explorations, documented with the useful parts: the problem, the constraints, and what comes next.</p></div><div className="project-grid">{projects.map((project, index) => <ProjectCard key={project.id} project={project} featured={index === 0} onOpen={setSelectedProject} />)}</div></section>
-      <section className="section-pad research-section" id="research"><SectionHeading eyebrow="04 / questions in progress" title="Research & technical interests" text="Not claims of publication. A map of the problems I want to understand more deeply." /><div className="research-list">{researchTopics.map(([topic, description, status], index) => <article className="research-row" key={topic}><span className="research-number">0{index + 1}</span><div className="research-icon"><Search size={18} /></div><div className="research-content"><h3>{topic}</h3><p>{description}</p></div><span className="research-status">{status}</span><ChevronRight size={17} /></article>)}</div></section>
-      <section className="section-pad experience-section" id="experience"><div className="experience-grid"><div><SectionHeading eyebrow="05 / field notes" title="Experience that starts at the bench." /><div className="timeline"><div className="timeline-item"><span className="timeline-marker" /><div><span className="timeline-date">Hands-on electronics experience <i>~ 3.5 years</i></span><h3>Practical troubleshooting & repair</h3><p>Hands-on exposure to TV and audio amplifier systems, home theatre systems, dish antenna systems, PCB debugging, component-level troubleshooting, and electronic equipment diagnostics.</p></div></div><div className="timeline-item"><span className="timeline-marker muted" /><div><span className="timeline-date">Summer internship <i>dates / organization to be added</i></span><h3>Internship details pending</h3><p className="placeholder">[Add organization, dates, and scope when confirmed.]</p></div></div></div></div><div className="education-card"><span className="eyebrow"><BookOpen size={13} /> education</span><span className="education-status">currently pursuing</span><h3>B.Tech</h3><p>Electronics & Communication Engineering</p><strong>Dewan VS Group of Engineering & Technology</strong><span>Meerut, Uttar Pradesh</span></div></div></section>
-      <section className="section-pad cert-section" id="certifications"><SectionHeading eyebrow="06 / credentials" title="Learning, documented." text="A small, honest record. Supporting details can be attached as they become available." /><div className="cert-grid">{['Basic Computer Certificate', 'Technofilia / TechnoFliia Certificate', 'School / college competition certificates'].map((title, index) => <article className="cert-card" key={title}><div className="cert-icon"><ShieldCheck size={18} /></div><span>0{index + 1} / certificate</span><h3>{title}</h3><p>Issuer: <b>[Add information]</b><br />Date: <b>[Add information]</b><br />Credential ID: <b>[Add information]</b></p></article>)}</div></section>
-      <section className="section-pad toolbox-section"><div className="toolbox-header"><SectionHeading eyebrow="07 / bench inventory" title="Tools I reach for." /><span className="terminal-badge"><span className="status-dot" /> system.status = "building"</span></div><div className="toolbox-list">{toolbox.map((item, index) => <span key={item}><Box size={14} />{item}<small>0{index + 1}</small></span>)}</div></section>
-      <section className="section-pad contact-section" id="contact"><div className="contact-copy"><SectionHeading eyebrow="08 / open channel" title={<>Let's build<br /><em>something.</em></>} text="Have a hardware problem, a firmware question, or a thoughtful collaboration in mind? The cleanest channel is GitHub." /><div className="contact-links"><a href="https://github.com/Mr-Manish-Pal" target="_blank" rel="noreferrer"><Github size={18} /> GitHub <ArrowUpRight size={15} /></a><span>LinkedIn <small>[Add profile]</small></span><span><Send size={18} /> Email <small>[Add email]</small></span></div></div><form className="contact-form" onSubmit={(event) => event.preventDefault()}><label>Name<input type="text" name="name" placeholder="Your name" /></label><label>Email<input type="email" name="email" placeholder="you@example.com" /></label><label>Message<textarea name="message" rows={4} placeholder="What are you building?" /></label><button className="button button-primary" type="submit">Send message <ArrowUpRight size={17} /></button><small>Frontend-only form. No backend or email service is configured.</small></form></section>
-      <section className="resume-band"><div><span className="eyebrow"><Asterisk size={13} /> next artifact</span><h2>Want the complete technical profile?</h2></div><a className="button button-primary" href="/resume/Manish_Pal_Resume.pdf" download>Download resume <ArrowUpRight size={17} /></a></section>
-    </main>
-    <footer><a className="wordmark" href="#home"><span className="wordmark-mark">MP</span><span>MANISH PAL <small>/ EMBEDDED SYSTEMS</small></span></a><p>Embedded Systems Engineer <span>|</span> ECE</p><a href="https://github.com/Mr-Manish-Pal" target="_blank" rel="noreferrer"><Github size={16} /> github.com/Mr-Manish-Pal</a><small>© {new Date().getFullYear()} Manish Pal. Built with intent.</small></footer>
-    <AnimatePresence>{selectedProject && <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />}</AnimatePresence>
-  </div>
+  useEffect(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduceMotion || !('IntersectionObserver' in window)) return
+
+    document.documentElement.classList.add('has-motion')
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -36px 0px' },
+    )
+
+    document.querySelectorAll('.reveal').forEach((element) => observer.observe(element))
+    return () => {
+      observer.disconnect()
+      document.documentElement.classList.remove('has-motion')
+    }
+  }, [])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id)
+        })
+      },
+      { rootMargin: '-30% 0px -60% 0px' },
+    )
+
+    document.querySelectorAll<HTMLElement>('#home, main section[id]').forEach((section) => {
+      observer.observe(section)
+    })
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const interval = window.setInterval(() => {
+      setRoleIndex((current) => (current + 1) % roles.length)
+    }, 3000)
+    return () => window.clearInterval(interval)
+  }, [])
+
+  const visibleProjects =
+    projectFilter === 'All'
+      ? projects
+      : projects.filter((project) => project.filters.includes(projectFilter))
+
+  async function handleContactSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setFormStatus('sending')
+    setFormMessage('')
+    const form = event.currentTarget
+
+    if (!contact.formspreeEndpoint) {
+      setFormStatus('error')
+      setFormMessage(
+        'The contact form is not connected yet. Please use GitHub or add your Formspree endpoint to .env.local.',
+      )
+      return
+    }
+
+    try {
+      const response = await fetch(contact.formspreeEndpoint, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' },
+      })
+
+      if (!response.ok) {
+        setFormStatus('error')
+        setFormMessage('Your message could not be sent. Please try again or contact me on GitHub.')
+        return
+      }
+
+      form.reset()
+      setFormStatus('success')
+      setFormMessage('Thanks for reaching out. Your message has been sent.')
+    } catch {
+      setFormStatus('error')
+      setFormMessage('A network error prevented your message from sending. Please try again.')
+    }
+  }
+
+  return (
+    <div className="site-shell">
+      <a className="skip-link" href="#main">Skip to content</a>
+      <header className="site-header">
+        <div className="nav-wrap">
+          <a className="brand" href="#home" aria-label="Manish Pal, home" onClick={() => setMenuOpen(false)}>
+            <span className="brand-mark">MP</span>
+            <span className="brand-name">MANISH PAL<span> / ECE</span></span>
+          </a>
+
+          <button
+            className="menu-toggle"
+            type="button"
+            aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={menuOpen}
+            aria-controls="primary-navigation"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            {menuOpen ? <X size={21} /> : <Menu size={21} />}
+          </button>
+
+          <nav
+            id="primary-navigation"
+            className={`navigation${menuOpen ? ' is-open' : ''}`}
+            aria-label="Main navigation"
+          >
+            {navItems.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className={activeSection === item.id ? 'active' : undefined}
+                aria-current={activeSection === item.id ? 'location' : undefined}
+                onClick={() => setMenuOpen(false)}
+              >
+                {item.label}
+              </a>
+            ))}
+            {socialLinks.resumeAvailable ? (
+              <a className="nav-resume" href={socialLinks.resume} download>Resume <ArrowUpRight size={14} /></a>
+            ) : (
+              <span className="nav-resume is-placeholder" aria-label="Resume PDF not added yet">Resume <span>soon</span></span>
+            )}
+          </nav>
+        </div>
+      </header>
+
+      <main id="main">
+        <section className="hero" id="home" aria-labelledby="hero-title">
+          <div className="hero-grid" aria-hidden="true" />
+          <div className="hero-glow hero-glow-one" aria-hidden="true" />
+          <div className="hero-glow hero-glow-two" aria-hidden="true" />
+          <div className="hero-inner">
+            <div className="hero-copy">
+              <p className="hero-kicker"><span className="availability-dot" /> AVAILABLE FOR PURPOSEFUL BUILDS <span className="kicker-divider">/</span> MEERUT, INDIA</p>
+              <h1 id="hero-title">Manish <em>Pal.</em></h1>
+              <p className="hero-role" aria-label={`${roles[roleIndex]}, ${profile.role}`}>
+                <span className="role-prefix">I’m a</span>
+                <span className="role-rotator" key={roles[roleIndex]}>{roles[roleIndex]}</span>
+              </p>
+              <p className="hero-description">{profile.value}</p>
+              <div className="hero-actions">
+                <a className="button button-primary" href="#projects">View projects <ArrowRight size={17} /></a>
+                <a className="button button-secondary" href="#contact">Contact me <ArrowDown size={16} /></a>
+              </div>
+              <div className="social-row" aria-label="Social profiles">
+                <a className="social-link" href={socialLinks.github} target="_blank" rel="noreferrer" aria-label="GitHub profile">
+                  <Github size={18} /><span>GitHub</span><ExternalLink size={12} />
+                </a>
+                <span className="social-link is-unavailable" aria-label="LinkedIn profile not provided">
+                  <span className="linkedin-icon" aria-hidden="true">in</span><span>LinkedIn</span><small>[add URL]</small>
+                </span>
+                <span className="social-link is-unavailable" aria-label="Email address not provided">
+                  <Mail size={18} /><span>Email</span><small>[add address]</small>
+                </span>
+              </div>
+            </div>
+
+            <HeroArtwork />
+            <p className="hero-index" aria-hidden="true">01 <span>—</span> 06</p>
+          </div>
+          <a className="scroll-cue" href="#about"><span>SCROLL TO EXPLORE</span><ChevronDown size={15} /></a>
+        </section>
+
+        <section className="content-section about-section" id="about" aria-labelledby="about-title">
+          <div className="section-container">
+            <SectionHeading id="about-title" index="01" eyebrow="A little about me" title="Curious by nature. Practical by design." description="I enjoy turning a circuit, a sensor, and a clear problem into something useful." />
+            <div className="about-layout">
+              <div className="about-copy reveal">
+                <p>{profile.about}</p>
+                <p>{profile.aboutMore}</p>
+                <div className="about-note"><span className="note-line" /><span>Build. Debug. Measure. Optimize.</span></div>
+              </div>
+              <aside className="about-facts reveal" aria-label="Profile details">
+                <div className="fact-row"><span>Currently</span><strong>{profile.role}</strong></div>
+                <div className="fact-row"><span>Focus</span><strong>Embedded systems &amp; firmware</strong></div>
+                <div className="fact-row"><span>Location</span><strong>{profile.location}</strong></div>
+                <div className="fact-row"><span>Hands-on experience</span><strong>~ 3.5 years in electronics</strong></div>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <section className="content-section skills-section" id="skills" aria-labelledby="skills-title">
+          <div className="section-container">
+            <SectionHeading id="skills-title" index="02" eyebrow="Tools I work with" title="A toolkit still in progress." description="Working knowledge where I build; exploring where I’m still learning. No inflated scores, just the tools and concepts I use." />
+            <div className="skills-grid">
+              {skills.map((group, index) => (
+                <article className="skill-card reveal" key={group.label} style={{ '--card-index': index } as CSSProperties}>
+                  <div className="skill-card-top"><span>0{index + 1}</span><span>{group.level}</span></div>
+                  <h3>{group.label}</h3>
+                  <ul className="tag-list">{group.items.map((item) => <li key={item}>{item}</li>)}</ul>
+                </article>
+              ))}
+            </div>
+            <div className="research-interests reveal">
+              <div><p className="eyebrow"><span>IN PROGRESS</span></p><h3>Questions I’m exploring</h3></div>
+              <ul>{researchTopics.map(([topic]) => <li key={topic}>{topic}</li>)}</ul>
+            </div>
+          </div>
+        </section>
+
+        <section className="content-section projects-section" id="projects" aria-labelledby="projects-title">
+          <div className="section-container">
+            <div className="projects-heading">
+              <SectionHeading id="projects-title" index="03" eyebrow="Selected work" title="Projects built to learn by doing." description="A mix of active builds, explorations, and concepts. Status and next steps are kept explicit." />
+              <span className="project-count"><strong>{String(projects.length).padStart(2, '0')}</strong><span>PROJECTS<br />SHARED</span></span>
+            </div>
+
+            <div className="filter-row" role="group" aria-label="Filter projects by category">
+              <span className="filter-label">FILTER</span>
+              {(['All', ...projectFilters] as const).map((filter) => (
+                <button
+                  key={filter}
+                  className={`filter-button${projectFilter === filter ? ' is-active' : ''}`}
+                  type="button"
+                  aria-pressed={projectFilter === filter}
+                  onClick={() => setProjectFilter(filter)}
+                >
+                  {filter}
+                </button>
+              ))}
+            </div>
+
+            <div className="project-grid" aria-live="polite">
+              {visibleProjects.map((project) => (
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  featured={project.id === 'attendance-system'}
+                />
+              ))}
+              {visibleProjects.length === 0 && (
+                <p className="empty-filter">Linux-focused project details will appear here when a project is ready to share.</p>
+              )}
+            </div>
+          </div>
+        </section>
+
+        <section className="content-section journey-section" id="journey" aria-labelledby="journey-title">
+          <div className="section-container">
+            <SectionHeading id="journey-title" index="04" eyebrow="Experience & education" title="Learning happens at the bench." description="A work in progress: hands-on repair experience alongside an engineering education." />
+            <div className="journey-grid">
+              <div className="timeline">
+                <h3 className="subsection-heading">Experience</h3>
+                {experience.map((item, index) => (
+                  <article className="timeline-item reveal" key={item.title}>
+                    <span className={`timeline-marker${index > 0 ? ' is-muted' : ''}`} aria-hidden="true" />
+                    <div className="timeline-content">
+                      <p className="timeline-date">{item.date}<span>{item.duration}</span></p>
+                      <h4>{item.title}</h4>
+                      <p>{item.description}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+              <div className="journey-aside">
+                <article className="education-card reveal">
+                  <div className="education-icon"><GraduationCap size={21} /></div>
+                  <p className="eyebrow"><span>EDUCATION</span></p>
+                  <h3>{education.degree}</h3>
+                  <p>{education.field}</p>
+                  <strong>{education.institution}</strong>
+                  <span>{education.location}</span>
+                  <small>Currently pursuing</small>
+                </article>
+                <article className="cert-card reveal">
+                  <p className="eyebrow"><span>CERTIFICATIONS</span></p>
+                  <h3>Learning, documented.</h3>
+                  <ul>
+                    {certifications.map((certification) => (
+                      <li key={certification}>
+                        <span>{certification}</span>
+                        <small>[Add issuer and date]</small>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="placeholder-note">Credential IDs: [Add when available]</p>
+                </article>
+                <p className="missing-details">Workshops &amp; achievements: [Add details when available]</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="content-section contact-section" id="contact" aria-labelledby="contact-title">
+          <div className="section-container contact-layout">
+            <div className="contact-copy reveal">
+              <SectionHeading id="contact-title" index="05" eyebrow="Get in touch" title="Have a good problem to solve?" description="I’m interested in thoughtful conversations about embedded systems, firmware, electronics, and useful things to build." />
+              <a className="contact-github" href={socialLinks.github} target="_blank" rel="noreferrer">
+                <Github size={18} /><span>Reach out on GitHub</span><ArrowUpRight size={16} />
+              </a>
+              <p className="contact-placeholder">Email: [Add your email] <span>/</span> LinkedIn: [Add your profile URL]</p>
+            </div>
+
+            <form className="contact-form reveal" onSubmit={handleContactSubmit}>
+              <p className="form-heading">Send a message</p>
+              <label htmlFor="contact-name">Your name</label>
+              <input id="contact-name" name="name" type="text" autoComplete="name" placeholder="Name" required minLength={2} />
+              <label htmlFor="contact-email">Email address</label>
+              <input id="contact-email" name="email" type="email" autoComplete="email" placeholder="you@example.com" required />
+              <label htmlFor="contact-message">What would you like to discuss?</label>
+              <textarea id="contact-message" name="message" rows={4} placeholder="A little about your idea..." required minLength={10} />
+              <button className="button button-primary form-submit" type="submit" disabled={formStatus === 'sending'}>
+                {formStatus === 'sending' ? 'Sending…' : 'Send message'} <ArrowRight size={17} />
+              </button>
+              <p className={`form-status ${formStatus}`} aria-live="polite" role={formStatus === 'error' ? 'alert' : 'status'}>
+                {formMessage || 'Your message is only sent when a form endpoint is configured.'}
+              </p>
+            </form>
+          </div>
+        </section>
+      </main>
+
+      <footer className="site-footer">
+        <div className="footer-main">
+          <a className="brand" href="#home" aria-label="Back to top">
+            <span className="brand-mark">MP</span>
+            <span className="brand-name">MANISH PAL<span> / ECE</span></span>
+          </a>
+          <p>Building close to the metal.<br /><span>One thoughtful iteration at a time.</span></p>
+          <nav className="footer-links" aria-label="Footer navigation">
+            {navItems.map((item) => <a key={item.id} href={`#${item.id}`}>{item.label}</a>)}
+            <a href={socialLinks.github} target="_blank" rel="noreferrer">GitHub <ExternalLink size={12} /></a>
+          </nav>
+        </div>
+        <div className="footer-bottom">
+          <small>© {new Date().getFullYear()} Manish Pal. All rights reserved.</small>
+          <a href="#home">Back to top <ArrowUpRight size={14} /></a>
+        </div>
+      </footer>
+    </div>
+  )
 }
 
-function HeroDiagram() { return <div className="hero-diagram" aria-label="Abstract embedded systems visualization"><div className="diagram-grid" /><div className="chip"><span>EDGE NODE</span><strong>IO</strong><small>SENSOR / BUS</small></div><div className="trace trace-one" /><div className="trace trace-two" /><div className="trace trace-three" /><div className="port port-one">UART</div><div className="port port-two">I2C</div><div className="port port-three">SPI</div><div className="wave"><span>signal / 01</span><svg viewBox="0 0 280 70" role="presentation"><path d="M0 44h24V18h23v37h20V28h22v16h24V12h22v43h25V34h24v10h23V23h22v21h25" /></svg></div><div className="diagram-label"><Terminal size={13} /> target = "embedded_systems"</div><div className="crosshair" /></div> }
+function ProjectCard({ project, featured }: { project: Project; featured: boolean }) {
+  return (
+    <article className={`project-card reveal${featured ? ' featured-project' : ''}`}>
+      <div className="project-card-meta">
+        <span className="project-number">{project.number} <span>/ {project.category}</span></span>
+        <span className={`project-status status-${project.status.toLowerCase().replaceAll(' ', '-')}`}>
+          <span />{project.status}
+        </span>
+      </div>
+      <h3>{project.title}</h3>
+      <p className="project-description">{project.description}</p>
+      <ul className="project-tags" aria-label="Technologies">{project.technologies.map((tag) => <li key={tag}>{tag}</li>)}</ul>
+      <div className="project-summary">
+        <div><span>THE PROBLEM</span><p>{project.problem}</p></div>
+        <div><span>CURRENT APPROACH</span><p>{project.approach}</p></div>
+        <div><span>OUTCOME</span><p className="outcome-placeholder">[Result to be documented after validation]</p></div>
+      </div>
+      <details className="project-details">
+        <summary>More project details <ChevronDown size={15} /></summary>
+        <div className="project-detail-content">
+          <div><h4>Hardware</h4><ul>{project.hardware.map((item) => <li key={item}>{item}</li>)}</ul></div>
+          <div><h4>Software</h4><ul>{project.software.map((item) => <li key={item}>{item}</li>)}</ul></div>
+          <div><h4>Challenges</h4><ul>{project.challenges.map((item) => <li key={item}>{item}</li>)}</ul></div>
+          <div><h4>Next steps</h4><p>{project.future}</p></div>
+        </div>
+      </details>
+      <div className="project-card-footer">
+        <span>{featured ? 'FEATURED · IN DEVELOPMENT' : project.status.toUpperCase()}</span>
+        {project.github && (
+          <a href={project.github} target="_blank" rel="noreferrer" aria-label={`${project.title} GitHub repository`}>
+            <Github size={17} /> Repository <ArrowUpRight size={14} />
+          </a>
+        )}
+      </div>
+    </article>
+  )
+}
 
-function ProjectCard({ project, featured, onOpen }: { project: Project; featured?: boolean; onOpen: (project: Project) => void }) { return <motion.article className={`project-card ${featured ? 'featured-project' : ''}`} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .18 }} whileHover={{ y: -5 }} transition={{ duration: .35 }}><div className="project-card-top"><span className="project-label"><b>{project.number}</b><span>/ {project.category}</span></span><span className={`project-status ${project.status.toLowerCase().replace(' ', '-')}`}>{project.status}</span></div><h3>{project.title}</h3><p>{project.description}</p><div className="project-tags">{project.technologies.map(tag => <span key={tag}>[{tag}]</span>)}</div><div className="project-card-bottom"><button type="button" onClick={() => onOpen(project)}>View project <ArrowUpRight size={16} /></button>{project.github && <a href={project.github} target="_blank" rel="noreferrer" aria-label={`Open ${project.title} GitHub repository`}><Github size={18} /></a>}</div>{featured && <div className="project-card-glow" />}</motion.article> }
-
-function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) { return <motion.div className="modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onClose}><motion.article className="project-modal" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 12 }} onClick={event => event.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="project-title"><button className="modal-close" type="button" onClick={onClose} aria-label="Close project details"><X size={19} /></button><span className="eyebrow"><Asterisk size={13} /> {project.number} / {project.category}</span><h2 id="project-title">{project.title}</h2><span className="modal-status">{project.status}</span><div className="modal-body"><div><h3>Problem</h3><p>{project.problem}</p><h3>Approach</h3><p>{project.approach}</p><h3>Future improvements</h3><p>{project.future}</p></div><div><h3>Hardware</h3><div className="modal-chips">{project.hardware.map(item => <span key={item}>{item}</span>)}</div><h3>Software</h3><div className="modal-chips">{project.software.map(item => <span key={item}>{item}</span>)}</div><h3>Challenges</h3><ul>{project.challenges.map(item => <li key={item}>{item}</li>)}</ul></div></div>{project.github && <a className="button button-primary" href={project.github} target="_blank" rel="noreferrer"><Github size={17} /> View repository</a>}</motion.article></motion.div> }
+function HeroArtwork() {
+  return (
+    <div className="hero-art reveal" aria-hidden="true">
+      <div className="art-orbit art-orbit-outer" />
+      <div className="art-orbit art-orbit-inner" />
+      <div className="art-cross art-cross-one" />
+      <div className="art-cross art-cross-two" />
+      <div className="art-core"><span>MP</span><small>ECE · EMBEDDED</small></div>
+      <div className="art-node art-node-one"><Cpu size={18} /><span>FIRMWARE</span></div>
+      <div className="art-node art-node-two"><Radio size={18} /><span>HARDWARE</span></div>
+      <div className="art-node art-node-three"><Cpu size={18} /><span>EDGE AI</span></div>
+      <span className="art-coordinate coordinate-one">MEERUT / IN</span>
+      <span className="art-coordinate coordinate-two">HARDWARE × SOFTWARE</span>
+      <svg className="circuit-lines" viewBox="0 0 520 520" fill="none">
+        <path d="M260 92v55m0 226v55M92 260h55m226 0h55M141 141l39 39m160 160 39 39m0-238-39 39m-160 160-39 39" />
+        <circle cx="260" cy="67" r="4" /><circle cx="260" cy="453" r="4" />
+        <circle cx="67" cy="260" r="4" /><circle cx="453" cy="260" r="4" />
+      </svg>
+    </div>
+  )
+}
 
 export default App
