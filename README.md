@@ -9,7 +9,7 @@ The site presents hands-on experience, education, skills, research interests, an
 
 ## Highlights
 
-- Dark rose-on-near-black visual design with responsive layouts and keyboard-visible focus states.
+- Clean, responsive light-theme design with a Manrope and slate-blue visual system, soft card surfaces, and keyboard-visible focus states.
 - Server-rendered HTML generated at build time so page content and metadata are present before client-side JavaScript runs.
 - Filterable project cards with problem statements, current approaches, openly marked outcomes, and additional technical details.
 - Education, repair experience, certifications, and research interests.
