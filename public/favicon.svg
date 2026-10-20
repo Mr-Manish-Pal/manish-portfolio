@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <rect width="64" height="64" rx="12" fill="#101419"/>
-  <rect x="3" y="3" width="58" height="58" rx="10" fill="#202832" stroke="#39D9F2" stroke-width="2"/>
+  <rect x="3" y="3" width="58" height="58" rx="10" fill="#202832" stroke="#3BAF96" stroke-width="2"/>
   <text x="32" y="42" fill="#F3F6FA" font-family="Arial,sans-serif" font-size="25" font-weight="700" text-anchor="middle">MP</text>
-  <circle cx="53" cy="49" r="4" fill="#39D9F2"/>
+  <circle cx="53" cy="49" r="4" fill="#45BFA5"/>
 </svg>

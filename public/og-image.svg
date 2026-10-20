@@ -8,34 +8,34 @@
       <stop offset="1" stop-color="#171D24"/>
     </linearGradient>
     <radialGradient id="glow">
-      <stop stop-color="#39D9F2" stop-opacity=".18"/>
-      <stop offset="1" stop-color="#39D9F2" stop-opacity="0"/>
+      <stop stop-color="#3BAF96" stop-opacity=".18"/>
+      <stop offset="1" stop-color="#3BAF96" stop-opacity="0"/>
     </radialGradient>
     <pattern id="grid" width="42" height="42" patternUnits="userSpaceOnUse">
-      <path d="M42 0H0V42" fill="none" stroke="#39D9F2" stroke-opacity=".1"/>
+      <path d="M42 0H0V42" fill="none" stroke="#3BAF96" stroke-opacity=".1"/>
     </pattern>
   </defs>
   <rect width="1200" height="630" fill="url(#background)"/>
   <rect width="1200" height="630" fill="url(#grid)"/>
   <ellipse cx="923" cy="315" rx="360" ry="315" fill="url(#glow)"/>
-  <rect x="72" y="75" width="64" height="64" fill="#202832" stroke="#39D9F2"/>
+  <rect x="72" y="75" width="64" height="64" fill="#202832" stroke="#3BAF96"/>
   <text x="104" y="119" fill="#F3F6FA" font-family="Arial,sans-serif" font-size="35" font-weight="700" text-anchor="middle">MP</text>
   <text x="164" y="116" fill="#A8B0BB" font-family="Arial,sans-serif" font-size="17" letter-spacing="4">MANISH PAL  /  ECE</text>
-  <text x="72" y="300" fill="#F3F6FA" font-family="Arial,sans-serif" font-size="83" font-weight="600">Manish <tspan fill="#39D9F2">Pal.</tspan></text>
+  <text x="72" y="300" fill="#F3F6FA" font-family="Arial,sans-serif" font-size="83" font-weight="600">Manish <tspan fill="#45BFA5">Pal.</tspan></text>
   <text x="78" y="361" fill="#A8B0BB" font-family="Arial,sans-serif" font-size="23">Embedded systems · Firmware · Electronics · Edge AI</text>
-  <path d="M78 416h362" stroke="#39D9F2" stroke-width="2"/>
+  <path d="M78 416h362" stroke="#3BAF96" stroke-width="2"/>
   <text x="78" y="462" fill="#A8B0BB" font-family="Arial,sans-serif" font-size="18">Aspiring Embedded Systems Engineer</text>
   <text x="78" y="511" fill="#89939F" font-family="Arial,sans-serif" font-size="15" letter-spacing="2">MEERUT, INDIA</text>
-  <g transform="translate(835 156)" fill="none" stroke="#39D9F2" stroke-opacity=".62">
+  <g transform="translate(835 156)" fill="none" stroke="#3BAF96" stroke-opacity=".62">
     <circle cx="150" cy="150" r="143"/>
     <circle cx="150" cy="150" r="115" stroke-dasharray="4 9"/>
-    <circle cx="150" cy="150" r="73" stroke="#39D9F2"/>
+    <circle cx="150" cy="150" r="73" stroke="#3BAF96"/>
     <path d="M150 7v56m0 174v56M7 150h56m174 0h56M49 49l40 40m122 122 40 40m0-202-40 40M89 211l-40 40"/>
-    <circle cx="150" cy="7" r="4" fill="#39D9F2"/>
-    <circle cx="293" cy="150" r="4" fill="#39D9F2"/>
+    <circle cx="150" cy="7" r="4" fill="#45BFA5"/>
+    <circle cx="293" cy="150" r="4" fill="#45BFA5"/>
   </g>
-  <circle cx="985" cy="306" r="57" fill="#202832" stroke="#39D9F2" stroke-opacity=".75"/>
+  <circle cx="985" cy="306" r="57" fill="#202832" stroke="#3BAF96" stroke-opacity=".75"/>
   <text x="985" y="325" fill="#F3F6FA" font-family="Arial,sans-serif" font-size="49" text-anchor="middle">MP</text>
-  <rect x="72" y="570" width="1056" height="1" fill="#39D9F2" fill-opacity=".3"/>
+  <rect x="72" y="570" width="1056" height="1" fill="#3BAF96" fill-opacity=".3"/>
   <text x="72" y="601" fill="#A8B0BB" font-family="monospace" font-size="12" letter-spacing="2">HARDWARE  /  FIRMWARE  /  LINUX  /  EDGE AI</text>
 </svg>

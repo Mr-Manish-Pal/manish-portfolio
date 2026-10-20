@@ -4,16 +4,16 @@
   --bg-alt: #171d24;
   --card: #171d24;
   --card-raised: #202832;
-  --rose: #39d9f2;
-  --rose-strong: #39d9f2;
-  --rose-hover: #24bfd8;
-  --rose-bright: #39d9f2;
-  --rose-rgb: 57, 217, 242;
-  --rose-deep-rgb: 57, 217, 242;
-  --rose-strong-rgb: 57, 217, 242;
-  --rose-bright-rgb: 57, 217, 242;
-  --accent: #39d9f2;
-  --accent-rgb: 57, 217, 242;
+  --rose: #45bfa5;
+  --rose-strong: #3baf96;
+  --rose-hover: #32957f;
+  --rose-bright: #45bfa5;
+  --rose-rgb: 59, 175, 150;
+  --rose-deep-rgb: 59, 175, 150;
+  --rose-strong-rgb: 59, 175, 150;
+  --rose-bright-rgb: 69, 191, 165;
+  --accent: #3baf96;
+  --accent-rgb: 59, 175, 150;
   --background-rgb: 16, 20, 25;
   --bg-alt-rgb: 23, 29, 36;
   --card-rgb: 23, 29, 36;
@@ -27,7 +27,7 @@
   --success-text: #36c9ad;
   --mask-opaque: #ffffff;
   --border: rgba(168, 176, 187, 0.15);
-  --border-strong: rgba(57, 217, 242, 0.38);
+  --border-strong: rgba(59, 175, 150, 0.38);
   --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --serif: var(--sans);
   --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -100,7 +100,7 @@ h1, h2, h3, h4 { color: var(--text); }
 .social-link:hover { color: var(--text); }
 .social-link.is-unavailable { color: var(--body); }
 .social-link.is-unavailable small { color: var(--muted-readable); font-family: var(--mono); font-size: 9px; }
-.linkedin-icon { display: grid; width: 18px; height: 18px; place-items: center; border-radius: 3px; background: #0a66c2; color: #ffffff; font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: -.06em; line-height: 1; }
+.linkedin-icon { display: grid; width: 18px; height: 18px; place-items: center; border-radius: 3px; background: var(--accent); color: var(--bg); font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: -.06em; line-height: 1; }
 .hero-art { position: relative; width: min(100%, 500px); aspect-ratio: 1; margin: auto; border: 1px solid var(--border); border-radius: 50%; background: radial-gradient(circle, rgba(var(--rose-strong-rgb), .08), transparent 58%); }
 .hero-art::before, .hero-art::after { position: absolute; inset: 9%; border: 1px solid rgba(var(--rose-rgb), .12); border-radius: 50%; content: ''; }
 .hero-art::after { inset: 21%; border-style: dashed; opacity: .65; }

@@ -9,7 +9,7 @@ The site presents hands-on experience, education, skills, research interests, an
 
 ## Highlights
 
-- Responsive graphite theme with electric-cyan accents, system typography, consistent card surfaces, and keyboard-visible focus states.
+- Responsive graphite theme with restrained teal accents, system typography, consistent card surfaces, and keyboard-visible focus states.
 - Server-rendered HTML generated at build time so page content and metadata are present before client-side JavaScript runs.
 - Filterable project cards with problem statements, current approaches, openly marked outcomes, and additional technical details.
 - Education, practical electronics experience, achievements, workshop information, and research interests.

@@ -515,7 +515,7 @@ function ProjectVisual({ project }: { project: Project }) {
 
   return (
     <figure className="project-visual">
-      <figcaption>Conceptual system flow · illustrative</figcaption>
+      <figcaption>Conceptual flow · illustrative, not live data</figcaption>
       <div aria-hidden="true">
         {visualStages[project.id].map((stage, index) => (
           <span className="visual-stage" key={stage}>
