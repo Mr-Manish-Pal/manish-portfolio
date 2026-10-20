@@ -723,3 +723,101 @@ h1, h2, h3, h4 { color: var(--text); }
   .project-card, .project-visual { transition: none; }
   .project-details[open] .project-detail-content { animation: none; }
 }
+
+/* Shared motion language: short entrances, responsive depth, and clear focus feedback. */
+.hero-copy { animation: arrive .55s ease-out both; }
+.hero-copy > .hero-kicker { animation: hero-sequence .34s .02s ease-out both; }
+.hero-copy > h1 { animation: hero-sequence .38s .06s ease-out both; }
+.hero-copy > .hero-role { animation: hero-sequence .34s .11s ease-out both; }
+.hero-copy > .hero-tagline { animation: hero-sequence .34s .15s ease-out both; }
+.hero-copy > .hero-description { animation: hero-sequence .38s .19s ease-out both; }
+.hero-copy > .hero-actions { animation: hero-sequence .38s .23s ease-out both; }
+.hero-copy > .social-row { animation: hero-sequence .38s .27s ease-out both; }
+@keyframes hero-sequence {
+  from { opacity: .35; transform: translateY(9px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.has-motion .about-copy.reveal:not(.is-visible) { transform: translateX(-10px); }
+.has-motion .about-facts.reveal:not(.is-visible) { transform: translateX(10px); }
+.has-motion .timeline-item.reveal:not(.is-visible) { transform: translateX(-9px); }
+.has-motion .skill-card.reveal:not(.is-visible),
+.has-motion .project-card.reveal:not(.is-visible) { transform: translateY(11px); }
+.timeline-item.reveal.is-visible,
+.skill-card.reveal.is-visible,
+.project-card.reveal.is-visible { animation-duration: .4s; }
+
+.button, .nav-resume, .menu-toggle, .filter-button,
+.social-link, .contact-link, .footer-links a, .footer-bottom a,
+.project-card-footer a, .tag-list li, .project-tags li {
+  transition: color .2s ease, background-color .2s ease, border-color .2s ease,
+    box-shadow .2s ease, transform .2s ease;
+}
+.button:active, .filter-button:active, .menu-toggle:active { transform: translateY(1px); }
+.button svg, .social-link svg, .contact-link svg, .project-card-footer a svg {
+  transition: transform .2s ease, color .2s ease;
+}
+.button:hover svg, .button:focus-visible svg,
+.project-card-footer a:hover svg:last-child,
+.project-card-footer a:focus-visible svg:last-child { transform: translateX(3px); }
+.social-link:hover svg:first-child, .contact-link:hover svg:first-child { transform: translateY(-1px); }
+.tag-list li:hover, .project-tags li:hover {
+  border-color: rgba(184, 117, 82, .55);
+  transform: translateY(-1px);
+}
+.project-card:hover, .project-card:focus-within {
+  border-color: rgba(217, 161, 127, .62);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, .16);
+}
+.project-card:focus-within { transform: translateY(-3px); }
+.project-card:hover .project-visual > div,
+.project-card:focus-within .project-visual > div { transform: scale(1.015); }
+.project-visual > div { transform-origin: center; transition: transform .28s ease; }
+.navigation > a:focus-visible::after { transform: scaleX(1); }
+.site-header { transition: box-shadow .25s ease, background-color .25s ease; }
+
+@keyframes grid-drift {
+  from { background-position: center 0, center 0; }
+  to { background-position: center 22px, center 22px; }
+}
+@keyframes header-depth {
+  from { box-shadow: 0 3px 16px rgba(24, 43, 58, .035); }
+  to { box-shadow: 0 5px 19px rgba(24, 43, 58, .1); }
+}
+@supports (animation-timeline: scroll()) {
+  .site-header {
+    animation: header-depth 1s linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0px 120px;
+  }
+  @media (min-width: 701px) {
+    .hero-grid {
+      animation: grid-appear .9s ease-out both, grid-drift 1s linear both;
+      animation-timeline: auto, scroll(root);
+      animation-range: normal, 0px 520px;
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .project-card:focus-within { transform: none; }
+  .project-card:hover .project-visual > div,
+  .project-card:focus-within .project-visual > div { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-copy, .hero-copy > *, .has-motion .reveal,
+  .has-motion .about-copy.reveal, .has-motion .about-facts.reveal,
+  .has-motion .timeline-item.reveal, .has-motion .skill-card.reveal,
+  .has-motion .project-card.reveal { opacity: 1; transform: none; animation: none; }
+  .site-header { animation: none; }
+  .hero-grid { animation: none; }
+  .project-card:focus-within, .project-card:hover { transform: none; }
+  .project-card:hover .project-visual > div,
+  .project-card:focus-within .project-visual > div { transform: none; }
+  .button, .nav-resume, .menu-toggle, .filter-button,
+  .social-link, .contact-link, .footer-links a, .footer-bottom a,
+  .project-card-footer a, .tag-list li, .project-tags li,
+  .project-visual > div { transition: none; }
+}
