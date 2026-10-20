@@ -9,7 +9,7 @@ The site presents hands-on experience, education, skills, research interests, an
 
 ## Highlights
 
-- Clean, responsive light-theme design with Times New Roman typography, a LinkedIn-blue-led palette, pale-blue section surfaces, soft card surfaces, and keyboard-visible focus states.
+- Clean, responsive dark-blue theme with Times New Roman typography, a LinkedIn-blue accent, layered navy section surfaces, soft card surfaces, and keyboard-visible focus states.
 - Server-rendered HTML generated at build time so page content and metadata are present before client-side JavaScript runs.
 - Filterable project cards with problem statements, current approaches, openly marked outcomes, and additional technical details.
 - Education, repair experience, certifications, and research interests.
