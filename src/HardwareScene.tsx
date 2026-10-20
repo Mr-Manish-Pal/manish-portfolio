@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import * as THREE from 'three'
+import type * as THREE from 'three'
 
 const hardwareColors = {
   warmIvory: 0xf4efe7,
@@ -11,7 +11,8 @@ const hardwareColors = {
   darkScreen: 0x283a3b,
   screenInk: 0x142522,
   silver: 0xbcc2bf,
-  screw: 0x9da49f,
+  studioWhite: 0xffffff,
+  clear: 0x000000,
 } as const
 
 type HardwareSceneProps = {
@@ -119,10 +120,12 @@ export default function HardwareScene({ onReady, onUnavailable }: HardwareSceneP
       onUnavailable()
     }
 
-    function initialize() {
+    async function initialize() {
       try {
+        const THREE = await import('three')
         if (disposed) return
 
+        const simplifiedGeometry = mobileQuery.matches
         const host = canvasElement.parentElement
         if (!host) return
 
@@ -147,10 +150,10 @@ export default function HardwareScene({ onReady, onUnavailable }: HardwareSceneP
         renderer.outputColorSpace = THREE.SRGBColorSpace
         renderer.toneMapping = THREE.ACESFilmicToneMapping
         renderer.toneMappingExposure = 1.08
-        renderer.setClearColor(0x000000, 0)
+        renderer.setClearColor(hardwareColors.clear, 0)
 
         scene.add(new THREE.HemisphereLight(hardwareColors.warmIvory, hardwareColors.mahogany, 2.1))
-        const keyLight = new THREE.DirectionalLight(0xffffff, 2.7)
+        const keyLight = new THREE.DirectionalLight(hardwareColors.studioWhite, 2.7)
         keyLight.position.set(-3.5, 7, 5)
         scene.add(keyLight)
         const fillLight = new THREE.DirectionalLight(hardwareColors.warmIvory, 1.1)
@@ -242,7 +245,7 @@ export default function HardwareScene({ onReady, onUnavailable }: HardwareSceneP
             [width * 0.35, depth * 0.2, width * 0.12, depth * 0.13],
             [-width * 0.39, depth * 0.25, width * 0.1, depth * 0.11],
           ]
-          componentPositions.forEach(([cx, cz, cw, cd], index) => {
+          componentPositions.slice(0, simplifiedGeometry ? 2 : componentPositions.length).forEach(([cx, cz, cw, cd], index) => {
             const component = new THREE.Mesh(
               new THREE.BoxGeometry(cw, index === 1 ? 0.14 : 0.08, cd),
               index === 1 ? silverMaterial : darkMaterial,
@@ -252,7 +255,7 @@ export default function HardwareScene({ onReady, onUnavailable }: HardwareSceneP
           })
 
           const pinGeometry = new THREE.BoxGeometry(0.055, 0.16, 0.055)
-          const pinCount = Math.round(depth / 0.19)
+          const pinCount = Math.round(depth / (simplifiedGeometry ? 0.28 : 0.19))
           for (const side of [-1, 1]) {
             for (let index = 0; index < pinCount; index += 1) {
               const pin = new THREE.Mesh(pinGeometry, boardEdgeMaterial)
@@ -395,7 +398,7 @@ export default function HardwareScene({ onReady, onUnavailable }: HardwareSceneP
       }
     }
 
-    initialize()
+    void initialize()
 
     return () => {
       disposed = true
