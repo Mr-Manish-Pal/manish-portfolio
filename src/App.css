@@ -892,7 +892,7 @@ h1, h2, h3, h4 { color: var(--text); }
     linear-gradient(145deg, rgba(var(--color-white-rgb), .38), rgba(var(--color-surface-alt-rgb), .74));
   transition: opacity .45s ease;
 }
-.scene-ready .workbench-fallback { opacity: 0; }
+.hero-art.scene-ready .workbench-fallback { opacity: 0; }
 .fallback-board {
   position: absolute;
   width: 53%;
@@ -1240,6 +1240,13 @@ h1, h2, h3, h4 { color: var(--text); }
 }
 .site-footer .brand-mark { border-color: var(--color-accent); background: var(--color-primary); color: var(--color-white); }
 .site-footer .footer-links a:hover, .site-footer .footer-bottom a:hover { color: var(--color-accent); }
+.projects-section .filter-button:focus-visible,
+.contact-section :not(.contact-form) :focus-visible,
+.site-footer :focus-visible,
+.achievement-card :focus-visible,
+.workshop-panel :focus-visible { outline-color: var(--color-cream-contrast); }
+.projects-section .project-card :focus-visible,
+.contact-form :focus-visible { outline-color: var(--color-focus); }
 
 @media (prefers-reduced-motion: reduce) {
   .hardware-scene-canvas { scroll-behavior: auto; }
