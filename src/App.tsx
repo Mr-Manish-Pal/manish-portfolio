@@ -1,16 +1,14 @@
-import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react'
 import {
   ArrowDown,
   ArrowRight,
   ArrowUpRight,
   ChevronDown,
-  Cpu,
   ExternalLink,
   GitBranch as Github,
   GraduationCap,
   Mail,
   Menu,
-  Radio,
   X,
 } from 'lucide-react'
 import {
@@ -32,6 +30,7 @@ import {
 } from './data/content'
 import './App.css'
 
+const LazyHardwareScene = lazy(() => import('./HardwareScene'))
 const roles = ['Embedded Systems Engineer', 'Firmware Developer', 'Hardware + Firmware Builder']
 const projectFilters: ProjectFilter[] = ['IoT', 'Firmware', 'Edge AI']
 
@@ -523,47 +522,120 @@ function ProjectCard({ project, featured, index }: { project: Project; featured:
 }
 
 function ProjectVisual({ project }: { project: Project }) {
-  const visualStages: Record<string, [string, string, string]> = {
-    'nexus-6': ['ESP32 room nodes', 'Local HTTP API', 'Room dashboard'],
-    gatex: ['Distance sensing', 'ESP32 control', 'Gate state + alerts'],
-    'predictive-maintenance': ['MPU6050 vibration', 'Signal features', 'TinyML exploration'],
-    'smart-energy-monitor': ['Voltage + current', 'ESP32 measurement', 'Energy dashboard'],
-    'stm32-oscilloscope': ['Analog input', 'STM32 ADC', 'OLED waveform'],
-    'sound-classifier': ['INMP441 audio', 'Feature extraction', 'On-device inference'],
+  const captions: Record<string, string> = {
+    'nexus-6': 'Distributed room nodes · local dashboard',
+    gatex: 'Distance sensing · gate state · alerts',
+    'predictive-maintenance': 'Vibration sensing · signal analysis',
+    'smart-energy-monitor': 'Electrical sensing · measurement flow',
+    'stm32-oscilloscope': 'STM32 ADC · OLED waveform concept',
+    'sound-classifier': 'Microphone input · audio feature flow',
   }
 
   return (
-    <figure className="project-visual">
-      <figcaption>Conceptual flow · illustrative, not live data</figcaption>
-      <div aria-hidden="true">
-        {visualStages[project.id].map((stage, index) => (
-          <span className="visual-stage" key={stage}>
-            <small>0{index + 1}</small>{stage}
-          </span>
-        ))}
+    <figure className={`project-visual project-visual-${project.id}`}>
+      <figcaption>{captions[project.id]} · illustrative, not to scale or live data</figcaption>
+      <div className="project-illustration" aria-hidden="true">
+        {project.id === 'nexus-6' && (
+          <svg viewBox="0 0 600 180">
+            <g className="illustration-traces">
+              <path d="M145 46h80v34h65M145 134h80v-34h65M455 46h-70v34h-75M455 134h-70v-34h-75" />
+            </g>
+            <g className="illustration-board">
+              <rect x="240" y="52" width="125" height="76" rx="3" />
+              <rect x="268" y="70" width="52" height="38" rx="2" />
+              <circle cx="252" cy="63" r="3" /><circle cx="353" cy="117" r="3" />
+            </g>
+            <g className="illustration-device">
+              <rect x="70" y="27" width="76" height="38" rx="3" /><rect x="70" y="115" width="76" height="38" rx="3" />
+              <rect x="454" y="27" width="76" height="38" rx="3" /><rect x="454" y="115" width="76" height="38" rx="3" />
+            </g>
+            <g className="illustration-detail"><circle cx="88" cy="46" r="5" /><circle cx="488" cy="46" r="5" /><circle cx="88" cy="134" r="5" /><circle cx="488" cy="134" r="5" /></g>
+          </svg>
+        )}
+        {project.id === 'gatex' && (
+          <svg viewBox="0 0 600 180">
+            <path className="illustration-traces" d="M102 136h390M180 55v38h72M422 55v38h-72M314 93h108" />
+            <g className="illustration-board"><rect x="248" y="74" width="112" height="70" rx="4" /><rect x="278" y="91" width="52" height="30" rx="2" /></g>
+            <g className="illustration-device"><rect x="142" y="31" width="76" height="44" rx="4" /><rect x="393" y="31" width="64" height="43" rx="3" /></g>
+            <g className="illustration-detail"><circle cx="160" cy="53" r="9" /><circle cx="198" cy="53" r="9" /><path d="M425 31v-16m-12 16v-16" /></g>
+            <path className="illustration-accent" d="M102 135h22l15-13 15 13h28m242 0h29l15-13 15 13h9" />
+          </svg>
+        )}
+        {project.id === 'predictive-maintenance' && (
+          <svg viewBox="0 0 600 180">
+            <path className="illustration-traces" d="M159 110h56m166 0h61" />
+            <g className="illustration-device"><rect x="78" y="69" width="83" height="80" rx="4" /><circle cx="120" cy="109" r="22" /></g>
+            <g className="illustration-board"><rect x="215" y="57" width="167" height="94" rx="4" /><rect x="270" y="83" width="57" height="43" rx="2" /></g>
+            <path className="illustration-accent" d="M421 111h21l8-20 12 38 12-54 12 37 10-18h23" />
+            <g className="illustration-detail"><circle cx="119" cy="109" r="5" /><circle cx="235" cy="76" r="3" /><circle cx="362" cy="132" r="3" /></g>
+          </svg>
+        )}
+        {project.id === 'smart-energy-monitor' && (
+          <svg viewBox="0 0 600 180">
+            <path className="illustration-traces" d="M147 91h57m83 0h50m83 0h35" />
+            <g className="illustration-device"><rect x="61" y="55" width="87" height="73" rx="4" /><rect x="205" y="55" width="83" height="73" rx="4" /><rect x="421" y="55" width="117" height="73" rx="4" /></g>
+            <g className="illustration-board"><rect x="337" y="62" width="77" height="60" rx="3" /><rect x="358" y="78" width="35" height="27" rx="2" /></g>
+            <g className="illustration-detail"><path d="M80 92h17l8-18 10 36 10-18h9M222 91h48m-42-12h36m-36 24h30" /></g>
+            <path className="illustration-accent" d="M147 91h57m84 0h49m77 0h7" />
+          </svg>
+        )}
+        {project.id === 'stm32-oscilloscope' && (
+          <svg viewBox="0 0 600 180">
+            <path className="illustration-traces" d="M172 94h62m124 0h64" />
+            <g className="illustration-board"><rect x="228" y="44" width="139" height="100" rx="4" /><rect x="270" y="77" width="56" height="44" rx="2" /></g>
+            <g className="illustration-device"><rect x="420" y="47" width="130" height="91" rx="5" /><rect x="433" y="59" width="104" height="65" rx="2" /></g>
+            <path className="illustration-accent" d="M442 94h13l8-15 10 32 10-49 10 39 11-14h29" />
+            <g className="illustration-detail"><circle cx="247" cy="62" r="3" /><circle cx="349" cy="128" r="3" /><path d="M80 85h72v18h20" /></g>
+          </svg>
+        )}
+        {project.id === 'sound-classifier' && (
+          <svg viewBox="0 0 600 180">
+            <path className="illustration-traces" d="M172 93h55m132 0h59" />
+            <g className="illustration-device"><rect x="74" y="54" width="99" height="83" rx="5" /><circle cx="122" cy="96" r="20" /></g>
+            <path className="illustration-accent" d="M111 96q11-22 22 0t22 0m-65 0q-18-31-29 0t29 0" />
+            <g className="illustration-board"><rect x="224" y="50" width="139" height="87" rx="4" /><rect x="267" y="74" width="54" height="40" rx="2" /></g>
+            <g className="illustration-device"><rect x="418" y="56" width="114" height="75" rx="4" /><path d="M441 109l21-24 18 13 21-25 25 23" /></g>
+            <path className="illustration-traces" d="M363 93h55" />
+          </svg>
+        )}
       </div>
     </figure>
   )
 }
 
 function HeroArtwork() {
+  const [sceneState, setSceneState] = useState<'loading' | 'ready' | 'fallback'>('loading')
+  const setReady = useCallback(() => setSceneState('ready'), [])
+  const setFallback = useCallback(() => setSceneState('fallback'), [])
+
   return (
-    <div className="hero-art reveal" aria-hidden="true">
-      <div className="art-orbit art-orbit-outer" />
-      <div className="art-orbit art-orbit-inner" />
-      <div className="art-cross art-cross-one" />
-      <div className="art-cross art-cross-two" />
-      <div className="art-core"><span>MP</span><small>ECE · EMBEDDED</small></div>
-      <div className="art-node art-node-one"><Cpu size={18} /><span>FIRMWARE</span></div>
-      <div className="art-node art-node-two"><Radio size={18} /><span>HARDWARE</span></div>
-      <div className="art-node art-node-three"><Cpu size={18} /><span>EDGE AI</span></div>
-      <span className="art-coordinate coordinate-one">MEERUT / IN</span>
-      <span className="art-coordinate coordinate-two">HARDWARE × SOFTWARE</span>
-      <svg className="circuit-lines" viewBox="0 0 520 520" fill="none">
-        <path d="M260 92v55m0 226v55M92 260h55m226 0h55M141 141l39 39m160 160 39 39m0-238-39 39m-160 160-39 39" />
-        <circle cx="260" cy="67" r="4" /><circle cx="260" cy="453" r="4" />
-        <circle cx="67" cy="260" r="4" /><circle cx="453" cy="260" r="4" />
-      </svg>
+    <div
+      className={`hero-art reveal scene-${sceneState}`}
+      role="group"
+      aria-label="Stylized interactive 3D study of two embedded development boards and an OLED display. The illustration is conceptual and not an exact board layout."
+    >
+      <div className="workbench-fallback" aria-hidden="true">
+        <div className="fallback-board fallback-board-esp">
+          <span className="fallback-chip" /><span className="fallback-component component-one" />
+          <span className="fallback-component component-two" /><span className="fallback-header" />
+        </div>
+        <div className="fallback-board fallback-board-stm">
+          <span className="fallback-chip" /><span className="fallback-component component-one" />
+          <span className="fallback-component component-two" /><span className="fallback-header" />
+        </div>
+        <div className="fallback-display"><svg viewBox="0 0 120 55"><path d="M4 28h18l9-12 9 23 12-33 11 35 12-19 10 8h31" /></svg></div>
+        <span className="fallback-label fallback-label-left">ESP32 · FORM STUDY</span>
+        <span className="fallback-label fallback-label-right">STM32 · FORM STUDY</span>
+      </div>
+      <div className="hardware-scene">
+        <Suspense fallback={null}>
+          <LazyHardwareScene onReady={setReady} onUnavailable={setFallback} />
+        </Suspense>
+      </div>
+      <span className="scene-caption" aria-hidden="true">STYLIZED HARDWARE STUDY · NOT TO SCALE</span>
+      <span className="scene-loading" role="status" aria-live="polite">
+        {sceneState === 'loading' ? 'Preparing interactive workbench' : sceneState === 'fallback' ? 'Static workbench view' : ''}
+      </span>
     </div>
   )
 }
