@@ -1,4 +1,4 @@
-import { useEffect, useState, type CSSProperties, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react'
 import {
   ArrowDown,
   ArrowRight,
@@ -26,13 +26,14 @@ import {
   skills,
   socialLinks,
   workshop,
+  workflowStages,
   type Project,
   type ProjectFilter,
 } from './data/content'
 import './App.css'
 
-const roles = ['Aspiring Embedded Systems Engineer', 'Firmware Developer', 'Hardware + Firmware Builder']
-const projectFilters: ProjectFilter[] = ['IoT', 'Computer Vision', 'Firmware', 'Linux']
+const roles = ['Embedded Systems Engineer', 'Firmware Developer', 'Hardware + Firmware Builder']
+const projectFilters: ProjectFilter[] = ['IoT', 'Firmware', 'Edge AI']
 
 function SectionHeading({
   id,
@@ -63,6 +64,7 @@ function App() {
   const [projectFilter, setProjectFilter] = useState<ProjectFilter | 'All'>('All')
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [formMessage, setFormMessage] = useState('')
+  const submissionInProgress = useRef(false)
 
   useEffect(() => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -98,7 +100,7 @@ function App() {
       { rootMargin: '-30% 0px -60% 0px' },
     )
 
-    document.querySelectorAll<HTMLElement>('#home, main section[id]').forEach((section) => {
+    document.querySelectorAll<HTMLElement>('#home, main section[id], #achievements').forEach((section) => {
       observer.observe(section)
     })
     return () => observer.disconnect()
@@ -119,6 +121,8 @@ function App() {
 
   async function handleContactSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    if (submissionInProgress.current) return
+    submissionInProgress.current = true
     setFormStatus('sending')
     setFormMessage('')
     const form = event.currentTarget
@@ -128,6 +132,7 @@ function App() {
       setFormMessage(
         'The contact form is not connected yet. Please use GitHub or add your Formspree endpoint to .env.local.',
       )
+      submissionInProgress.current = false
       return
     }
 
@@ -150,6 +155,8 @@ function App() {
     } catch {
       setFormStatus('error')
       setFormMessage('A network error prevented your message from sending. Please try again.')
+    } finally {
+      submissionInProgress.current = false
     }
   }
 
@@ -191,7 +198,7 @@ function App() {
               </a>
             ))}
             {socialLinks.resumeAvailable ? (
-              <a className="nav-resume" href={socialLinks.resume} download>Resume <ArrowUpRight size={14} /></a>
+              <a className="nav-resume" href={socialLinks.resume} download aria-label="Download resume PDF">Resume <ArrowUpRight size={14} /></a>
             ) : (
               <span className="nav-resume is-placeholder" aria-label="Resume PDF not added yet">Resume <span>soon</span></span>
             )}
@@ -208,10 +215,11 @@ function App() {
             <div className="hero-copy">
               <p className="hero-kicker"><span className="availability-dot" /> ELECTRONICS &amp; COMMUNICATION ENGINEERING <span className="kicker-divider">/</span> MEERUT, INDIA</p>
               <h1 id="hero-title">Manish <em>Pal</em></h1>
-              <p className="hero-role" aria-label={`${roles[roleIndex]}, ${profile.role}`}>
-                <span className="role-prefix">Aspiring</span>
+              <p className="hero-role" aria-label={`${roleIndex === 0 ? 'Aspiring ' : ''}${roles[roleIndex]}`}>
+                {roleIndex === 0 && <span className="role-prefix">Aspiring</span>}
                 <span className="role-rotator" key={roles[roleIndex]}>{roles[roleIndex]}</span>
               </p>
+              <p className="hero-tagline">Hardware + Firmware + Real-World Impact</p>
               <p className="hero-description">{profile.value}</p>
               <div className="hero-actions">
                 <a className="button button-primary" href="#projects">Explore Projects <ArrowRight size={17} /></a>
@@ -272,6 +280,17 @@ function App() {
               <div><p className="eyebrow"><span>IN PROGRESS</span></p><h3>Questions I’m exploring</h3></div>
               <ul>{researchTopics.map(([topic]) => <li key={topic}>{topic}</li>)}</ul>
             </div>
+            <div className="workflow reveal">
+              <div>
+                <p className="eyebrow"><span>ENGINEERING WORKFLOW</span></p>
+                <h3>From problem to tested iteration.</h3>
+              </div>
+              <ol>
+                {workflowStages.map((stage, index) => (
+                  <li key={stage}><span>0{index + 1}</span>{stage}</li>
+                ))}
+              </ol>
+            </div>
           </div>
         </section>
 
@@ -306,7 +325,7 @@ function App() {
                 />
               ))}
               {visibleProjects.length === 0 && (
-                <p className="empty-filter">Linux-focused project details will appear here when a project is ready to share.</p>
+                <p className="empty-filter">No projects currently match this filter.</p>
               )}
             </div>
           </div>
@@ -454,6 +473,7 @@ function ProjectCard({ project, featured }: { project: Project; featured: boolea
           <span />{project.status}
         </span>
       </div>
+      <ProjectVisual project={project} />
       <h3>{project.title}</h3>
       <p className="project-description">{project.description}</p>
       <ul className="project-tags" aria-label="Technologies">{project.technologies.map((tag) => <li key={tag}>{tag}</li>)}</ul>
@@ -480,6 +500,30 @@ function ProjectCard({ project, featured }: { project: Project; featured: boolea
         )}
       </div>
     </article>
+  )
+}
+
+function ProjectVisual({ project }: { project: Project }) {
+  const visualStages: Record<string, [string, string, string]> = {
+    'nexus-6': ['ESP32 room nodes', 'Local HTTP API', 'Room dashboard'],
+    gatex: ['Distance sensing', 'ESP32 control', 'Gate state + alerts'],
+    'predictive-maintenance': ['MPU6050 vibration', 'Signal features', 'TinyML exploration'],
+    'smart-energy-monitor': ['Voltage + current', 'ESP32 measurement', 'Energy dashboard'],
+    'stm32-oscilloscope': ['Analog input', 'STM32 ADC', 'OLED waveform'],
+    'sound-classifier': ['INMP441 audio', 'Feature extraction', 'On-device inference'],
+  }
+
+  return (
+    <figure className="project-visual">
+      <figcaption>Conceptual system flow · illustrative</figcaption>
+      <div aria-hidden="true">
+        {visualStages[project.id].map((stage, index) => (
+          <span className="visual-stage" key={stage}>
+            <small>0{index + 1}</small>{stage}
+          </span>
+        ))}
+      </div>
+    </figure>
   )
 }
 
