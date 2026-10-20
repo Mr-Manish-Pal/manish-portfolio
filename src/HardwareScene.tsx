@@ -13,7 +13,7 @@ const boardColors = {
   metal: 0xb9c3c9,
   metalDark: 0x65727a,
   component: 0x22282d,
-  cream: 0xf5ede7,
+  cream: 0xf5f2eb,
   burgundy: 0x32131f,
   led: 0x9e413a,
   glass: 0x182733,

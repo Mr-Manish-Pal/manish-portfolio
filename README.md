@@ -9,7 +9,7 @@ The site presents hands-on experience, education, skills, research interests, an
 
 ## Highlights
 
-- Responsive editorial theme led by warm ivory (`#F5EDE7`) and soft stone (`#E8E3D9`), with burgundy (`#54202D`) reserved for selected contrast sections and muted bronze (`#B58A68`) used as a restrained accent; system sans-serif text and a serif display face.
+- Responsive editorial theme balancing deep burgundy (`#54202D`) contrast sections with warm ivory (`#F5F2EB`) and soft stone (`#E8E3D9`) content surfaces; muted copper (`#B87552`) is reserved for key accents, with system sans-serif text and a serif display face.
 - A lazily loaded, procedural Three.js form study of one blue STM32F103C8T6 Blue Pill board, with subtle pointer parallax, off-screen and background-tab pausing, reduced-motion support, and a CSS fallback when WebGL is unavailable. Component placement is illustrative, not an exact board reference.
 - Server-rendered HTML generated at build time so page content and metadata are present before client-side JavaScript runs.
 - Filterable project cards with problem statements, current approaches, openly marked outcomes, and additional technical details.
