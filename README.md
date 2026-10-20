@@ -14,7 +14,7 @@ The site presents hands-on experience, education, skills, research interests, an
 - Filterable project cards with problem statements, current approaches, openly marked outcomes, and additional technical details.
 - Education, practical electronics experience, achievements, workshop information, and research interests.
 - Conceptual project-flow diagrams that are explicitly labelled as illustrative, not live sensor data.
-- Restrained signal and card motion, reduced-motion support, keyboard-accessible navigation, and client-side project interactions.
+- Smooth section navigation, observer-triggered staggered reveals, scroll-linked depth where supported, restrained signal and card motion, reduced-motion support, keyboard-accessible navigation, and client-side project interactions.
 - Accessible contact form with validation and success/error feedback when a Formspree endpoint is configured.
 - Open Graph/social metadata, JSON-LD, a branded social preview, favicon set, web manifest, sitemap, and robots file.
 
