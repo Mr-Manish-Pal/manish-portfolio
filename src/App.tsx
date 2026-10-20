@@ -357,7 +357,7 @@ function App() {
               <div className="timeline">
                 <h3 className="subsection-heading">Experience</h3>
                 {experience.map((item, index) => (
-                  <article className="timeline-item reveal" key={item.title}>
+                  <article className="timeline-item reveal" key={item.title} style={{ '--card-index': index } as CSSProperties}>
                     <span className={`timeline-marker${index > 0 ? ' is-muted' : ''}`} aria-hidden="true" />
                     <div className="timeline-content">
                       <p className="timeline-date">{item.date}<span>{item.duration}</span></p>
