@@ -79,7 +79,7 @@ svg { flex: 0 0 auto; }
 .kicker-divider { color: var(--rose-bright); }
 h1, h2, h3, h4, p { margin-top: 0; }
 h1, h2, h3, h4 { color: var(--text); }
-.hero h1 { margin: 0; font-family: var(--serif); font-size: clamp(76px, 10.4vw, 142px); font-weight: 600; letter-spacing: -.055em; line-height: .86; }
+.hero h1 { margin: 0; font-family: var(--serif); font-size: clamp(64px, 8.2vw, 118px); font-weight: 600; letter-spacing: -.055em; line-height: .94; }
 .hero h1 em, .section-heading h2 em { color: var(--rose-bright); font-weight: 500; }
 .hero-role { display: flex; min-height: 38px; margin: 29px 0 10px; align-items: baseline; gap: 8px; color: var(--body); font-size: clamp(15px, 1.8vw, 20px); }
 .role-rotator { color: var(--rose-bright); animation: role-enter .35s both; }
@@ -315,7 +315,7 @@ h1, h2, h3, h4 { color: var(--text); }
   .hero { min-height: auto; }
   .hero-inner { width: calc(100% - 2 * var(--gutter)); padding-block: 76px 85px; grid-template-columns: 1fr; gap: 43px; }
   .hero-copy { max-width: 560px; }
-  .hero h1 { font-size: clamp(72px, 17vw, 112px); }
+  .hero h1 { font-size: clamp(58px, 14vw, 92px); }
   .hero-role { margin-top: 24px; font-size: 16px; }
   .hero-tagline { max-width: 42ch; font-size: 9px; line-height: 1.6; }
   .hero-art { width: min(82vw, 390px); }
@@ -388,9 +388,9 @@ h1, h2, h3, h4 { color: var(--text); }
 .art-node { border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, .24); }
 .content-section { border-bottom-color: var(--border); }
 .skill-card, .project-card, .education-card, .cert-card, .contact-form { border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, .12); }
-.skill-card { background: var(--card); }
+.skill-card { background: var(--card-raised); }
 .project-card { background: var(--card); }
-.education-card, .cert-card { background: var(--card); }
+.education-card, .cert-card { background: var(--card-raised); }
 .tag-list li, .project-tags li, .research-interests li { border-radius: 6px; background: rgba(var(--bg-alt-rgb), .65); }
 .project-status { border-radius: 999px; }
 .filter-button.is-active { background: rgba(var(--rose-strong-rgb), .24); }

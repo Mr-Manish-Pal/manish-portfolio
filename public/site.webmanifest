@@ -1,12 +1,12 @@
 {
   "name": "Manish Pal — Embedded Systems Portfolio",
   "short_name": "Manish Pal",
-  "description": "Embedded systems, firmware, electronics, Linux, and edge AI portfolio.",
+  "description": "Manish Pal's embedded systems projects, firmware work, and engineering portfolio.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#0B0709",
-  "theme_color": "#0B0709",
+  "background_color": "#101419",
+  "theme_color": "#101419",
   "icons": [
     {
       "src": "/icon-192.png",

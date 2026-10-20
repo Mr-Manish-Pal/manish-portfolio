@@ -1,4 +1,4 @@
-export type ProjectFilter = 'IoT' | 'Computer Vision' | 'Firmware' | 'Linux'
+export type ProjectFilter = 'IoT' | 'Firmware' | 'Edge AI'
 
 export type Project = {
   id: string
@@ -33,7 +33,7 @@ export const socialLinks = {
   github: 'https://github.com/Mr-Manish-Pal',
   linkedin: 'https://www.linkedin.com/in/manish-pal-b34928438/',
   email: 'palmanish1463@gmail.com',
-  resume: '/resume/Manish_Pal_Resume.docx',
+  resume: '/resume/Manish_Pal_Resume.pdf',
   resumeAvailable: true,
 }
 
@@ -46,7 +46,7 @@ export const profile = {
   aboutMore:
     'I have hands-on experience with electronics troubleshooting, PCB-level diagnosis, and microcontroller-based project development. I am particularly interested in embedded systems, IoT, TinyML, and intelligent edge devices that connect sensing, control, and communication.',
   value:
-    'Building practical embedded systems by combining microcontrollers, electronics, firmware, and connected hardware to solve real-world engineering problems.',
+    'I build practical embedded systems by combining microcontrollers, electronics, firmware, and connected hardware.',
 }
 
 export const skills = [
@@ -76,7 +76,7 @@ export const skills = [
     items: ['VS Code', 'PlatformIO', 'Arduino IDE', 'STM32CubeMX', 'Git & GitHub', 'Linux / Fedora', 'KiCad'],
   },
   {
-    label: 'Advanced Learning',
+    label: 'IoT & Edge AI Exploration',
     level: 'Exploring',
     items: ['TinyML', 'Edge AI', 'Digital Signal Processing', 'FFT', 'FreeRTOS concepts', 'IoT communication', 'HTTP APIs'],
   },
@@ -107,7 +107,6 @@ export const projects: Project[] = [
       'The prototype remains a monitoring platform and is not presented as certified industrial safety equipment.',
     outcome:
       'Reported as a first-place winner at the state-level Sewa Sankalp Innovation Challenge 2026.',
-    github: 'https://github.com/Mr-Manish-Pal',
   },
   {
     id: 'gatex',
@@ -143,7 +142,7 @@ export const projects: Project[] = [
       'A low-cost edge-monitoring project investigating vibration sensing, signal processing, and on-device anomaly detection for rotating systems.',
     technologies: ['ESP32', 'MPU6050', 'TinyML', 'FFT', 'FreeRTOS'],
     status: 'In Progress',
-    filters: ['Firmware'],
+    filters: ['Firmware', 'Edge AI'],
     problem:
       'Extract meaningful vibration information close to a machine without depending on every sample being sent to the cloud.',
     approach:
@@ -219,7 +218,7 @@ export const projects: Project[] = [
       'A compact embedded audio-classification project using microphone input, signal processing, and lightweight on-device inference ideas.',
     technologies: ['ESP32', 'INMP441', 'TinyML', 'Audio processing'],
     status: 'In Progress',
-    filters: ['Firmware', 'Computer Vision'],
+    filters: ['Firmware', 'Edge AI'],
     problem:
       'Explore how embedded audio data can be represented and classified locally with limited compute and memory.',
     approach:
@@ -254,13 +253,6 @@ export const experience = [
     description:
       'Approximately 3.5 years of hands-on electronics experience working on television amplifiers, home-theatre systems, dish antenna systems, PCB debugging, and component-level troubleshooting through a relative’s electronics shop.',
   },
-  {
-    title: 'Embedded Systems Internship',
-    date: 'Details pending',
-    duration: 'To be confirmed',
-    description:
-      'The internship details are intentionally kept editable until the organization, dates, and responsibilities are confirmed.',
-  },
 ]
 
 export const education = {
@@ -288,9 +280,9 @@ export const achievements = [
       'Built and iterated on multiple microcontroller-based projects, including monitoring systems, gate control, and sensing prototypes.',
   },
   {
-    title: 'Technical workshop participation',
+    title: 'Technophilia 2K26 participation',
     detail:
-      'Contributed to practical technology learning through hands-on embedded engineering activities and project discussions.',
+      'Participated in the Technophilia 2K26 technical event.',
   },
 ]
 
@@ -300,7 +292,7 @@ export const workshop = {
   studentCoordinator: 'Student Coordinator: Bholaxmi Sharma',
   facultyCoordinator: 'Faculty Coordinator: Pratibha Sukhroop Kaur',
   venue: 'Venue: Drone Lab',
-  schedule: 'Scheduled date: 15 October (confirm final year and status before publication)',
+  schedule: 'Date and event status are awaiting confirmation.',
   audience: 'Intended audience: second- and third-year ECE, EE, and CS students',
   topics: ['Arduino', 'NodeMCU', 'ESP32', 'STM32', 'Raspberry Pi Pico', 'Raspberry Pi', 'C fundamentals', 'Sensor interfacing', 'Practical project development'],
 }

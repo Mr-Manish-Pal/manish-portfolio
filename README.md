@@ -9,10 +9,11 @@ The site presents hands-on experience, education, skills, research interests, an
 
 ## Highlights
 
-- Clean, responsive dark-blue theme with Times New Roman typography, a LinkedIn-blue accent, layered navy section surfaces, soft card surfaces, and keyboard-visible focus states.
+- Responsive graphite theme with electric-cyan accents, system typography, consistent card surfaces, and keyboard-visible focus states.
 - Server-rendered HTML generated at build time so page content and metadata are present before client-side JavaScript runs.
 - Filterable project cards with problem statements, current approaches, openly marked outcomes, and additional technical details.
-- Education, repair experience, certifications, and research interests.
+- Education, practical electronics experience, achievements, workshop information, and research interests.
+- Conceptual project-flow diagrams that are explicitly labelled as illustrative, not live sensor data.
 - Reduced-motion support, keyboard-accessible navigation, and client-side project interactions.
 - Accessible contact form with validation and success/error feedback when a Formspree endpoint is configured.
 - Open Graph/social metadata, JSON-LD, a branded social preview, favicon set, web manifest, sitemap, and robots file.
@@ -76,22 +77,22 @@ The form validates required name, email, and message fields in the browser. To e
 2. Set `VITE_FORMSPREE_ENDPOINT` to that endpoint in `.env.local` and in Vercel’s environment settings.
 3. Rebuild and deploy. The form reports a success state only after the service accepts the submission; network and service errors are shown to the visitor.
 
-Until configured, the form clearly reports that it is not connected and points visitors to GitHub instead. No email address or form endpoint is assumed.
+Until configured, the form clearly reports that it is not connected and points visitors to GitHub instead. A Formspree endpoint is not assumed.
 
 ## Content and placeholders
 
 Portfolio data lives in [`src/data/content.ts`](./src/data/content.ts); layout and interactions live in [`src/App.tsx`](./src/App.tsx). Update those files to change project status, technology tags, experience, skills, links, or profile copy.
 
-Replace the marked placeholders before announcing the site:
+Review the remaining confirmation items before announcing the site:
 
-- Add the real resume PDF at `public/resume/Manish_Pal_Resume.pdf` and set `resumeAvailable` in `src/data/content.ts` to `true`.
-- Add a real LinkedIn URL and email address to `socialLinks` in `src/data/content.ts`, then replace their visible placeholder labels in `src/App.tsx`.
+- The resume PDF is available at `public/resume/Manish_Pal_Resume.pdf`; the download action points to that file.
 - Add actual results, demos, links, hardware details, certificate issuers/dates, and workshop or achievement details only when confirmed.
-- Add screenshots only when project images are ready; no project screenshots or results are fabricated.
+- Workshop date and event status remain unconfirmed.
+- Project photographs are not yet available; labelled conceptual diagrams are used instead.
 - Set `VITE_SITE_URL` to the production Vercel domain only if Vercel’s production URL variable is not available.
 - Set `VITE_FORMSPREE_ENDPOINT` to enable form delivery.
 
-The Smart Attendance System is labelled **In development** and its hardware is explicitly marked as potential. Project outcomes are placeholders until validated.
+Project statuses and outcomes are stated conservatively; update them only after validation.
 
 ## Project structure
 
@@ -105,6 +106,8 @@ The Smart Attendance System is labelled **In development** and its hardware is e
 │   ├── icon-512.png
 │   ├── og-image.png        # 1200 × 630 share card
 │   ├── og-image.svg
+│   ├── resume/
+│   │   └── Manish_Pal_Resume.pdf
 │   └── site.webmanifest
 ├── scripts/
 │   └── prerender.mjs       # Generates static HTML and deployment-aware SEO files
