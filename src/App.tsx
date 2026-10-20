@@ -14,6 +14,7 @@ import {
   X,
 } from 'lucide-react'
 import {
+  achievements,
   certifications,
   contact,
   education,
@@ -24,12 +25,13 @@ import {
   researchTopics,
   skills,
   socialLinks,
+  workshop,
   type Project,
   type ProjectFilter,
 } from './data/content'
 import './App.css'
 
-const roles = ['Embedded Systems Engineer', 'Firmware Developer', 'Edge AI Builder']
+const roles = ['Aspiring Embedded Systems Engineer', 'Firmware Developer', 'Hardware + Firmware Builder']
 const projectFilters: ProjectFilter[] = ['IoT', 'Computer Vision', 'Firmware', 'Linux']
 
 function SectionHeading({
@@ -158,7 +160,7 @@ function App() {
         <div className="nav-wrap">
           <a className="brand" href="#home" aria-label="Manish Pal, home" onClick={() => setMenuOpen(false)}>
             <span className="brand-mark">MP</span>
-            <span className="brand-name">MANISH PAL<span> / ECE</span></span>
+            <span className="brand-name">MANISH PAL<span> / EMBEDDED</span></span>
           </a>
 
           <button
@@ -204,27 +206,28 @@ function App() {
           <div className="hero-glow hero-glow-two" aria-hidden="true" />
           <div className="hero-inner">
             <div className="hero-copy">
-              <p className="hero-kicker"><span className="availability-dot" /> AVAILABLE FOR PURPOSEFUL BUILDS <span className="kicker-divider">/</span> MEERUT, INDIA</p>
-              <h1 id="hero-title">Manish <em>Pal.</em></h1>
+              <p className="hero-kicker"><span className="availability-dot" /> ELECTRONICS &amp; COMMUNICATION ENGINEERING <span className="kicker-divider">/</span> MEERUT, INDIA</p>
+              <h1 id="hero-title">Manish <em>Pal</em></h1>
               <p className="hero-role" aria-label={`${roles[roleIndex]}, ${profile.role}`}>
-                <span className="role-prefix">I’m a</span>
+                <span className="role-prefix">Aspiring</span>
                 <span className="role-rotator" key={roles[roleIndex]}>{roles[roleIndex]}</span>
               </p>
               <p className="hero-description">{profile.value}</p>
               <div className="hero-actions">
-                <a className="button button-primary" href="#projects">View projects <ArrowRight size={17} /></a>
-                <a className="button button-secondary" href="#contact">Contact me <ArrowDown size={16} /></a>
+                <a className="button button-primary" href="#projects">Explore Projects <ArrowRight size={17} /></a>
+                <a className="button button-secondary" href={socialLinks.github} target="_blank" rel="noreferrer">GitHub Profile <ExternalLink size={15} /></a>
+                <a className="button button-secondary" href="#contact">Contact Me <ArrowDown size={16} /></a>
               </div>
               <div className="social-row" aria-label="Social profiles">
                 <a className="social-link" href={socialLinks.github} target="_blank" rel="noreferrer" aria-label="GitHub profile">
                   <Github size={18} /><span>GitHub</span><ExternalLink size={12} />
                 </a>
-                <span className="social-link is-unavailable" aria-label="LinkedIn profile not provided">
-                  <span className="linkedin-icon" aria-hidden="true">in</span><span>LinkedIn</span><small>[add URL]</small>
-                </span>
-                <span className="social-link is-unavailable" aria-label="Email address not provided">
-                  <Mail size={18} /><span>Email</span><small>[add address]</small>
-                </span>
+                <a className="social-link" href={socialLinks.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn profile">
+                  <span className="linkedin-icon" aria-hidden="true">in</span><span>LinkedIn</span><ExternalLink size={12} />
+                </a>
+                <a className="social-link" href={`mailto:${socialLinks.email}`} aria-label="Email address">
+                  <Mail size={18} /><span>Email</span><ExternalLink size={12} />
+                </a>
               </div>
             </div>
 
@@ -299,7 +302,7 @@ function App() {
                 <ProjectCard
                   key={project.id}
                   project={project}
-                  featured={project.id === 'attendance-system'}
+                  featured={project.id === 'nexus-6'}
                 />
               ))}
               {visibleProjects.length === 0 && (
@@ -309,9 +312,9 @@ function App() {
           </div>
         </section>
 
-        <section className="content-section journey-section" id="journey" aria-labelledby="journey-title">
+        <section className="content-section journey-section" id="experience" aria-labelledby="journey-title">
           <div className="section-container">
-            <SectionHeading id="journey-title" index="04" eyebrow="Experience & education" title="Learning happens at the bench." description="A work in progress: hands-on repair experience alongside an engineering education." />
+            <SectionHeading id="journey-title" index="04" eyebrow="Experience & education" title="Learning happens at the bench." description="Practical electronics experience and engineering education shaped by real troubleshooting, prototyping, and system-level thinking." />
             <div className="journey-grid">
               <div className="timeline">
                 <h3 className="subsection-heading">Experience</h3>
@@ -343,13 +346,43 @@ function App() {
                     {certifications.map((certification) => (
                       <li key={certification}>
                         <span>{certification}</span>
-                        <small>[Add issuer and date]</small>
+                        <small>Recorded achievement / recognition</small>
                       </li>
                     ))}
                   </ul>
-                  <p className="placeholder-note">Credential IDs: [Add when available]</p>
+                  <p className="placeholder-note">More credentials can be added as formal documentation becomes available.</p>
                 </article>
-                <p className="missing-details">Workshops &amp; achievements: [Add details when available]</p>
+                <div className="achievement-card reveal" id="achievements">
+                  <p className="eyebrow"><span>ACHIEVEMENTS</span></p>
+                  <ul>
+                    {achievements.map((achievement) => (
+                      <li key={achievement.title}><strong>{achievement.title}</strong><span>{achievement.detail}</span></li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="content-section workshop-section" id="workshops" aria-labelledby="workshop-title">
+          <div className="section-container">
+            <SectionHeading id="workshop-title" index="05" eyebrow="Workshop & leadership" title="Technical communication that moves beyond the bench." description="A practical workshop format focused on embedded fundamentals, sensor interfacing, and hands-on project thinking." />
+            <div className="workshop-panel reveal">
+              <div>
+                <p className="eyebrow"><span>WORKSHOP</span></p>
+                <h3>{workshop.title}</h3>
+              </div>
+              <ul>
+                <li>{workshop.mentor}</li>
+                <li>{workshop.studentCoordinator}</li>
+                <li>{workshop.facultyCoordinator}</li>
+                <li>{workshop.venue}</li>
+                <li>{workshop.schedule}</li>
+                <li>{workshop.audience}</li>
+              </ul>
+              <div className="workshop-topics">
+                {workshop.topics.map((topic) => <span key={topic}>{topic}</span>)}
               </div>
             </div>
           </div>
@@ -358,11 +391,16 @@ function App() {
         <section className="content-section contact-section" id="contact" aria-labelledby="contact-title">
           <div className="section-container contact-layout">
             <div className="contact-copy reveal">
-              <SectionHeading id="contact-title" index="05" eyebrow="Get in touch" title="Have a good problem to solve?" description="I’m interested in thoughtful conversations about embedded systems, firmware, electronics, and useful things to build." />
+              <SectionHeading id="contact-title" index="06" eyebrow="Get in touch" title="Have a good problem to solve?" description="Open to embedded engineering internships, entry-level opportunities, and technically meaningful collaborations." />
               <a className="contact-github" href={socialLinks.github} target="_blank" rel="noreferrer">
                 <Github size={18} /><span>Reach out on GitHub</span><ArrowUpRight size={16} />
               </a>
-              <p className="contact-placeholder">Email: [Add your email] <span>/</span> LinkedIn: [Add your profile URL]</p>
+              <a className="contact-link" href={`mailto:${socialLinks.email}`}>
+                <Mail size={18} /><span>{socialLinks.email}</span>
+              </a>
+              <a className="contact-link" href={socialLinks.linkedin} target="_blank" rel="noreferrer">
+                <span className="linkedin-icon" aria-hidden="true">in</span><span>LinkedIn</span>
+              </a>
             </div>
 
             <form className="contact-form reveal" onSubmit={handleContactSubmit}>
@@ -371,6 +409,8 @@ function App() {
               <input id="contact-name" name="name" type="text" autoComplete="name" placeholder="Name" required minLength={2} />
               <label htmlFor="contact-email">Email address</label>
               <input id="contact-email" name="email" type="email" autoComplete="email" placeholder="you@example.com" required />
+              <label htmlFor="contact-subject">Subject</label>
+              <input id="contact-subject" name="subject" type="text" placeholder="Project collaboration / internship / question" required minLength={3} />
               <label htmlFor="contact-message">What would you like to discuss?</label>
               <textarea id="contact-message" name="message" rows={4} placeholder="A little about your idea..." required minLength={10} />
               <button className="button button-primary form-submit" type="submit" disabled={formStatus === 'sending'}>
@@ -420,7 +460,7 @@ function ProjectCard({ project, featured }: { project: Project; featured: boolea
       <div className="project-summary">
         <div><span>THE PROBLEM</span><p>{project.problem}</p></div>
         <div><span>CURRENT APPROACH</span><p>{project.approach}</p></div>
-        <div><span>OUTCOME</span><p className="outcome-placeholder">[Result to be documented after validation]</p></div>
+        <div><span>OUTCOME</span><p>{project.outcome}</p></div>
       </div>
       <details className="project-details">
         <summary>More project details <ChevronDown size={15} /></summary>
@@ -432,7 +472,7 @@ function ProjectCard({ project, featured }: { project: Project; featured: boolea
         </div>
       </details>
       <div className="project-card-footer">
-        <span>{featured ? 'FEATURED · IN DEVELOPMENT' : project.status.toUpperCase()}</span>
+        <span>{featured ? 'FEATURED · ' + project.status.toUpperCase() : project.status.toUpperCase()}</span>
         {project.github && (
           <a href={project.github} target="_blank" rel="noreferrer" aria-label={`${project.title} GitHub repository`}>
             <Github size={17} /> Repository <ArrowUpRight size={14} />
