@@ -83,9 +83,27 @@ function App() {
       { threshold: 0.12, rootMargin: '0px 0px -36px 0px' },
     )
 
-    document.querySelectorAll('.reveal').forEach((element) => observer.observe(element))
+    const observeRevealElements = (root: ParentNode) => {
+      root.querySelectorAll('.reveal:not(.is-visible)').forEach((element) => observer.observe(element))
+    }
+
+    observeRevealElements(document)
+    const projectGrid = document.querySelector('.project-grid')
+    const mutations = projectGrid && new MutationObserver((records) => {
+      records.forEach(({ addedNodes }) => {
+        addedNodes.forEach((node) => {
+          if (node instanceof Element) {
+            if (node.matches('.reveal:not(.is-visible)')) observer.observe(node)
+            observeRevealElements(node)
+          }
+        })
+      })
+    })
+    if (projectGrid && mutations) mutations.observe(projectGrid, { childList: true, subtree: true })
+
     return () => {
       observer.disconnect()
+      mutations?.disconnect()
       document.documentElement.classList.remove('has-motion')
     }
   }, [])
@@ -317,11 +335,12 @@ function App() {
             </div>
 
             <div className="project-grid" aria-live="polite">
-              {visibleProjects.map((project) => (
+              {visibleProjects.map((project, index) => (
                 <ProjectCard
                   key={project.id}
                   project={project}
                   featured={project.id === 'nexus-6'}
+                  index={index}
                 />
               ))}
               {visibleProjects.length === 0 && (
@@ -464,9 +483,9 @@ function App() {
   )
 }
 
-function ProjectCard({ project, featured }: { project: Project; featured: boolean }) {
+function ProjectCard({ project, featured, index }: { project: Project; featured: boolean; index: number }) {
   return (
-    <article className={`project-card reveal${featured ? ' featured-project' : ''}`}>
+    <article className={`project-card reveal${featured ? ' featured-project' : ''}`} style={{ '--card-index': index } as CSSProperties}>
       <div className="project-card-meta">
         <span className="project-number">{project.number} <span>/ {project.category}</span></span>
         <span className={`project-status status-${project.status.toLowerCase().replaceAll(' ', '-')}`}>
