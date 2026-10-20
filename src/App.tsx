@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react'
 import {
-  ArrowDown,
   ArrowRight,
   ArrowUpRight,
   ChevronDown,
@@ -225,9 +224,6 @@ function App() {
 
       <main id="main">
         <section className="hero" id="home" aria-labelledby="hero-title">
-          <div className="hero-grid" aria-hidden="true" />
-          <div className="hero-glow hero-glow-one" aria-hidden="true" />
-          <div className="hero-glow hero-glow-two" aria-hidden="true" />
           <div className="hero-inner">
             <div className="hero-copy">
               <p className="hero-kicker"><span className="availability-dot" /> ELECTRONICS &amp; COMMUNICATION ENGINEERING <span className="kicker-divider">/</span> MEERUT, INDIA</p>
@@ -241,7 +237,6 @@ function App() {
               <div className="hero-actions">
                 <a className="button button-primary" href="#projects">Explore Projects <ArrowRight size={17} /></a>
                 <a className="button button-secondary" href={socialLinks.github} target="_blank" rel="noreferrer">GitHub Profile <ExternalLink size={15} /></a>
-                <a className="button button-secondary" href="#contact">Contact Me <ArrowDown size={16} /></a>
               </div>
               <div className="social-row" aria-label="Social profiles">
                 <a className="social-link" href={socialLinks.github} target="_blank" rel="noreferrer" aria-label="GitHub profile">
@@ -255,9 +250,7 @@ function App() {
                 </a>
               </div>
             </div>
-
             <HeroArtwork />
-            <p className="hero-index" aria-hidden="true">01 <span>—</span> 06</p>
           </div>
           <a className="scroll-cue" href="#about"><span>SCROLL TO EXPLORE</span><ChevronDown size={15} /></a>
         </section>
@@ -610,29 +603,30 @@ function HeroArtwork() {
 
   return (
     <div
-      className={`hero-art reveal scene-${sceneState}`}
+      className="hero-art reveal"
+      data-scene-state={sceneState}
       role="group"
-      aria-label="Stylized interactive 3D study of two embedded development boards and an OLED display. The illustration is conceptual and not an exact board layout."
+      aria-label="Interactive 3D form study of a blue STM32F103C8T6 Blue Pill development board. Component placement is illustrative, not an exact reference layout."
     >
       <div className="workbench-fallback" aria-hidden="true">
-        <div className="fallback-board fallback-board-esp">
-          <span className="fallback-chip" /><span className="fallback-component component-one" />
-          <span className="fallback-component component-two" /><span className="fallback-header" />
+        <div className="fallback-board fallback-blue-pill">
+          <span className="fallback-usb" />
+          <span className="fallback-pill-chip" />
+          <span className="fallback-crystal" />
+          <span className="fallback-reset" />
+          <span className="fallback-passive passive-one" />
+          <span className="fallback-passive passive-two" />
+          <span className="fallback-led" />
+          <span className="fallback-headers fallback-headers-left" />
+          <span className="fallback-headers fallback-headers-right" />
         </div>
-        <div className="fallback-board fallback-board-stm">
-          <span className="fallback-chip" /><span className="fallback-component component-one" />
-          <span className="fallback-component component-two" /><span className="fallback-header" />
-        </div>
-        <div className="fallback-display"><svg viewBox="0 0 120 55"><path d="M4 28h18l9-12 9 23 12-33 11 35 12-19 10 8h31" /></svg></div>
-        <span className="fallback-label fallback-label-left">ESP32 · FORM STUDY</span>
-        <span className="fallback-label fallback-label-right">STM32 · FORM STUDY</span>
       </div>
       <div className="hardware-scene">
         <HardwareScene onReady={setReady} onUnavailable={setFallback} />
       </div>
-      <span className="scene-caption" aria-hidden="true">STYLIZED HARDWARE STUDY · NOT TO SCALE</span>
+      <span className="scene-caption">STM32F103C8T6 · STYLIZED BLUE PILL FORM STUDY</span>
       <span className="scene-loading" role="status" aria-live="polite">
-        {sceneState === 'loading' ? 'Preparing interactive workbench' : sceneState === 'fallback' ? 'Static workbench view' : ''}
+        {sceneState === 'loading' ? 'Loading board visualization' : sceneState === 'fallback' ? 'Static board view · illustrative' : ''}
       </span>
     </div>
   )

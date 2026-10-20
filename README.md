@@ -9,8 +9,8 @@ The site presents hands-on experience, education, skills, research interests, an
 
 ## Highlights
 
-- Responsive editorial theme using warm cream (`#F4EFE7`), burgundy (`#54202D`), mahogany (`#38201F`), soft stone (`#E9E0D6`), and bronze (`#B58A68`); Times New Roman body typography with a Palatino-style display face for headings.
-- A lazily loaded, low-poly Three.js workbench study with stylized embedded boards, an OLED waveform concept, pointer/scroll parallax, off-screen pausing, and a CSS fallback when WebGL is unavailable.
+- Responsive editorial theme led by warm ivory (`#F5EDE7`) and soft stone (`#E8E3D9`), with burgundy (`#54202D`) reserved for selected contrast sections and muted bronze (`#B58A68`) used as a restrained accent; system sans-serif text and a serif display face.
+- A lazily loaded, procedural Three.js form study of one blue STM32F103C8T6 Blue Pill board, with subtle pointer parallax, off-screen and background-tab pausing, reduced-motion support, and a CSS fallback when WebGL is unavailable. Component placement is illustrative, not an exact board reference.
 - Server-rendered HTML generated at build time so page content and metadata are present before client-side JavaScript runs.
 - Filterable project cards with problem statements, current approaches, openly marked outcomes, and additional technical details.
 - Education, practical electronics experience, achievements, workshop information, and research interests.
@@ -22,7 +22,7 @@ The site presents hands-on experience, education, skills, research interests, an
 ## Tech stack
 
 - React and TypeScript
-- Three.js (lazy-loaded for the hero workbench scene)
+- Three.js (dynamically loaded for the hero board scene)
 - Vite
 - Custom responsive CSS
 - Lucide icons
