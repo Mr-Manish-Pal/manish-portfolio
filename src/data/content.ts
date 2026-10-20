@@ -33,8 +33,8 @@ export const socialLinks = {
   github: 'https://github.com/Mr-Manish-Pal',
   linkedin: 'https://www.linkedin.com/in/manish-pal-b34928438/',
   email: 'palmanish1463@gmail.com',
-  resume: '/resume/Manish_Pal_Resume.pdf',
-  resumeAvailable: false,
+  resume: '/resume/Manish_Pal_Resume.docx',
+  resumeAvailable: true,
 }
 
 export const profile = {
