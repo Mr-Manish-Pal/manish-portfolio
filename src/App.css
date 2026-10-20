@@ -811,6 +811,7 @@ h1, h2, h3, h4 { color: var(--text); }
   .has-motion .about-copy.reveal, .has-motion .about-facts.reveal,
   .has-motion .timeline-item.reveal, .has-motion .skill-card.reveal,
   .has-motion .project-card.reveal { opacity: 1; transform: none; animation: none; }
+  .hero-copy, .hero-copy > * { opacity: 1; transform: none; animation: none !important; }
   .site-header { animation: none; }
   .hero-grid { animation: none; }
   .project-card:focus-within, .project-card:hover { transform: none; }
