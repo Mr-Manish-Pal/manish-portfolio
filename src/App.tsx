@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react'
+import { useCallback, useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react'
 import {
   ArrowDown,
   ArrowRight,
@@ -28,9 +28,9 @@ import {
   type Project,
   type ProjectFilter,
 } from './data/content'
+import HardwareScene from './HardwareScene'
 import './App.css'
 
-const LazyHardwareScene = lazy(() => import('./HardwareScene'))
 const roles = ['Embedded Systems Engineer', 'Firmware Developer', 'Hardware + Firmware Builder']
 const projectFilters: ProjectFilter[] = ['IoT', 'Firmware', 'Edge AI']
 
@@ -628,9 +628,7 @@ function HeroArtwork() {
         <span className="fallback-label fallback-label-right">STM32 · FORM STUDY</span>
       </div>
       <div className="hardware-scene">
-        <Suspense fallback={null}>
-          <LazyHardwareScene onReady={setReady} onUnavailable={setFallback} />
-        </Suspense>
+        <HardwareScene onReady={setReady} onUnavailable={setFallback} />
       </div>
       <span className="scene-caption" aria-hidden="true">STYLIZED HARDWARE STUDY · NOT TO SCALE</span>
       <span className="scene-loading" role="status" aria-live="polite">
